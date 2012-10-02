@@ -1,0 +1,15 @@
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Debug\FarseerPrototype1.exe
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Debug\FarseerPrototype1.pdb
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Debug\FarseerPhysicsXNA.dll
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\obj\x86\Debug\FarseerPrototype1.exe
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\obj\x86\Debug\FarseerPrototype1.pdb
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\obj\x86\Debug\Decl\FarseerPrototype1.exe
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\obj\x86\Debug\Decl\FarseerPrototype1.pdb
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Debug\Content\crate.xnb
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Debug\Content\floor.xnb
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Debug\Content\paddle.xnb
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Debug\Content\cursor.xnb
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Debug\Content\circle.xnb
+C:\Users\niels\Documents\GitHub\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Debug\Content\char.xnb
