@@ -13,7 +13,9 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 
 namespace FarseerPrototype1 {
+
     class Bullet : DrawablePhysicsObject{
+        
         public Bullet(World world, Texture2D texture, Vector2 size, float mass, Vector2 position, Vector2 angle) : base(world, texture, size) {
             body = BodyFactory.CreateCircle(world, size.X/2 * CoordinateHelper.pixelToUnit, mass);
             this.Body.BodyType = BodyType.Dynamic;
@@ -22,11 +24,13 @@ namespace FarseerPrototype1 {
             Body.OnCollision += Body_OnCollision; // or use a lambda
         }
 
-        bool Body_OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact){
-            fixtureB.Body.BodyType = BodyType.Dynamic;
+        bool Body_OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact){       
             if (fixtureB.Body.Mass == 101){
                 fixtureB.Body.ApplyForce(new Vector2(this.Body.LinearVelocity.X*1000, this.Body.LinearVelocity.Y*1000));
+            } else if (fixtureB.Body.Mass == 12.7999992f) {
+                fixtureA.Body.IsSensor = true;
             }
+            
             return true;
         }
 

@@ -33,7 +33,7 @@ namespace FarseerPrototype1 {
             this.Body.Mass = mass;
 
             Random rand = new Random();
-            this.Position = new Vector2(rand.Next(900), rand.Next(600));
+            this.Position = new Vector2(100 + rand.Next(800), 100 + rand.Next(600));
             realPosition = Position;
             Body.OnCollision += Body_OnCollision; // or use a lambda
         }

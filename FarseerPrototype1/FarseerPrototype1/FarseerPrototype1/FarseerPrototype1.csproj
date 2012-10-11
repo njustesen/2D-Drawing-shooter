@@ -113,6 +113,7 @@
     <Compile Include="Bullet.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="CoordinateHelper.cs" />
+    <Compile Include="Wall.cs" />
     <Compile Include="Crate.cs" />
     <Compile Include="DrawablePhysicsObject.cs" />
     <Compile Include="Floor.cs" />

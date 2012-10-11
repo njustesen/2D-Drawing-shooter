@@ -23,6 +23,8 @@ namespace FarseerPrototype1 {
         List<Point> pointList;
         List<Bullet> bullets;
         DrawablePhysicsObject floor;
+        DrawablePhysicsObject leftWall;
+        DrawablePhysicsObject rightWall;
         KeyboardState prevKeyboardState;
         Random random;
         float elapseTime;
@@ -73,14 +75,20 @@ namespace FarseerPrototype1 {
             cursorB = this.Content.Load<Texture2D>("cursor");
 
             // Floor
-            floor = new Floor(world, Content.Load<Texture2D>("floor"), new Vector2(GraphicsDevice.Viewport.Width, 100.0f), 10000.0f);
+            floor = new Floor(world, Content.Load<Texture2D>("floor"), new Vector2(GraphicsDevice.Viewport.Width, 100.0f), 10000010.0f);
             floor.Position = new Vector2(GraphicsDevice.Viewport.Width / 2.0f, GraphicsDevice.Viewport.Height);
 
-            characterA = new Character(world, this.Content.Load<Texture2D>("char"), new Vector2(20f, 60f), 101);
-            characterA.Position = new Vector2(50, 50);
+            leftWall = new Wall(world, Content.Load<Texture2D>("wall"), new Vector2(100.0f, GraphicsDevice.Viewport.Height), 10000001.0f);
+            leftWall.Position = new Vector2(0.0f, GraphicsDevice.Viewport.Height / 2);
 
-            characterB = new Character(world, this.Content.Load<Texture2D>("char"), new Vector2(20f, 60f), 101);
-            characterB.Position = new Vector2(GraphicsDevice.Viewport.Width - 50, 50);
+            rightWall = new Wall(world, Content.Load<Texture2D>("wall"), new Vector2(100.0f, GraphicsDevice.Viewport.Height), 10000001.0f);
+            rightWall.Position = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height / 2);
+
+            characterA = new Character(world, this.Content.Load<Texture2D>("char"), new Vector2(20f, 60f), 101f);
+            characterA.Position = new Vector2(150, 50);
+
+            characterB = new Character(world, this.Content.Load<Texture2D>("char"), new Vector2(20f, 60f), 101f);
+            characterB.Position = new Vector2(GraphicsDevice.Viewport.Width - 150, 50);
 
             crateList = new List<DrawablePhysicsObject>();
             pointList = new List<Point>();
@@ -101,16 +109,27 @@ namespace FarseerPrototype1 {
             crateList.Add(crate);
         }
 
-        private void SpawnPoint(int x, int y) {
-            Point point = new Point(world, circle, new Vector2(12.0f, 12.0f), 0.1f);
-            point.Body.BodyType = BodyType.Static;
-            point.Position = new Vector2(x,y);
+        float minDistance = 50;
 
-            pointList.Add(point);
+        private void SpawnPoint(int x, int y) {
+            if (distance(characterA.Position.X, characterA.Position.Y, x, y) >= minDistance) {
+                if (distance(characterB.Position.X, characterB.Position.Y, x, y) >= minDistance) {
+                    if (x > 50 && x < GraphicsDevice.Viewport.Width - 50) {
+                        if (y > 0 && y < GraphicsDevice.Viewport.Height - 50) {
+                            Point point = new Point(world, circle, new Vector2(12.0f, 12.0f), 1.2f);
+                            //point.Body.Mass = 1.2f;
+                            point.Body.BodyType = BodyType.Static;
+                            point.Position = new Vector2(x, y);
+
+                            pointList.Add(point);
+                        }
+                    }
+                }
+            }
         }
 
-        private void spawnBulletA() {
-            /*
+        private void spawnBulletA() { 
+            // Ignore if to close to character
             Vector2 angle = new Vector2(cursorAPosition.X - characterA.Position.X, cursorAPosition.Y - characterA.Position.Y);
 
             // Convert to unit length
@@ -118,50 +137,76 @@ namespace FarseerPrototype1 {
             float y = (float)(angle.Y / Math.Sqrt((double)((angle.X * angle.X) + (angle.Y * angle.Y))));
             angle = new Vector2(x,y);
 
-            //Double Angle = Math.Atan2(y2 - y1, x2 - x1) - Math.Atan2(y4 - y3, x4 - x3);
-            //float anglef = (float)(Math.Atan2(cursorAPosition.Y - characterA.Position.Y, cursorAPosition.X - characterA.Position.X) - Math.Atan2(characterA.Position.Y, 1 - characterA.Position.X));
-
-            //angle = new Vector2((float)Math.Cos(anglef), (float)Math.Sin(anglef));
-            //angle = ;
             angle *= 100;
 
-            Bullet bullet = new Bullet(world, circle, new Vector2(12f, 12f), 1f, characterA.Position + angle / 2, angle);
+            Bullet bullet = new Bullet(world, circle, new Vector2(12f, 12f), 1.1f, characterA.Position + angle / 2, angle);
+            bullet.Body.Friction = 0.5f;
             bullets.Add(bullet);
-            */
         }
 
         private void spawnBulletB() {
-            /*
             Vector2 angle = new Vector2(cursorBPosition.X - characterB.Position.X, cursorBPosition.Y - characterB.Position.Y);
 
             // Convert to unit length
             float x = (float)(angle.X / Math.Sqrt((double)((angle.X * angle.X) + (angle.Y * angle.Y))));
             float y = (float)(angle.Y / Math.Sqrt((double)((angle.X * angle.X) + (angle.Y * angle.Y))));
             angle = new Vector2(x, y);
-
             angle *= 100;
 
-            Bullet bullet = new Bullet(world, circle, new Vector2(12f, 12f), 1f, characterB.Position + angle / 2, angle);
-            
+            Bullet bullet = new Bullet(world, circle, new Vector2(12f, 12f), 1.1f, characterB.Position + angle / 2, angle);
+            bullet.Body.Friction = 0.5f;
             bullets.Add(bullet);
-             * */
+        }
+
+        private double distance(float x1, float y1, float x2, float y2) {
+            double dx = x1 - x2;         //horizontal difference 
+            double dy = y1 - y2;         //vertical difference 
+            double dist = Math.Sqrt(dx * dx + dy * dy); //distance using Pythagoras theorem
+            return dist;
         }
 
         protected override void Update(GameTime gameTime) {
 
+            if (bullets.Count > 100){
+                int i = 1;
+                i++;
+            }
+
+            if (pointList.Count > 100) {
+                int i = 1;
+                i++;
+            }
+
+            // Remove points
+            List<Point> pointsToBeRemoved = new List<Point>();
+            foreach(Point p in pointList){
+                if (p.Position.Y > GraphicsDevice.Viewport.Height) {
+                    pointsToBeRemoved.Add(p);
+                }
+            }
+            foreach (Point p in pointsToBeRemoved) {
+                pointList.Remove(p);
+                world.RemoveBody(p.Body);
+            }
+
+            List<Bullet> bulletsToBeRemoved = new List<Bullet>();
+            foreach (Bullet b in bullets) {
+                if (b.Position.Y > GraphicsDevice.Viewport.Height) {
+                    bulletsToBeRemoved.Add(b);
+                }
+            }
+            foreach (Bullet b in bulletsToBeRemoved) {
+                bullets.Remove(b);
+                world.RemoveBody(b.Body);
+            }
+
             if (characterA.Ink < maxInk) {
-                characterA.Ink += 0.03f;
+                characterA.Ink += 0.03f * 100;
             }
             if (characterB.Ink < maxInk) {
-                characterB.Ink += 0.03f;
+                characterB.Ink += 0.03f * 100;
             }
-
-            floor.Body.BodyType = BodyType.Static;
-            floor.Position = new Vector2(GraphicsDevice.Viewport.Width / 2.0f, GraphicsDevice.Viewport.Height);
-
-            star.Body.BodyType = BodyType.Static;
-            star.Position = star.RealPosition;
-
+ 
             // Update timeSinceLastShot
             timeSinceLastShotA += gameTime.ElapsedGameTime.Milliseconds;
             timeSinceLastShotB += gameTime.ElapsedGameTime.Milliseconds;
@@ -170,7 +215,9 @@ namespace FarseerPrototype1 {
             characterA.checkIfJumping();
             characterB.checkIfJumping();
 
-            world.Step((float)gameTime.ElapsedGameTime.TotalSeconds);
+            float time = Math.Min(100,((float)gameTime.ElapsedGameTime.TotalSeconds));
+
+            world.Step(time);
 
             // FPS
             elapseTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -241,7 +288,7 @@ namespace FarseerPrototype1 {
                 SpawnPoint((int)cursorBPosition.X, (int)cursorBPosition.Y);
                 characterB.Ink -= 1f;
             }
-            if (padState2.Triggers.Right > 0.9f && characterA.Ink > 0) {
+            if (padState2.Triggers.Right > 0.9f && characterB.Ink > 0) {
                 if (timeSinceLastShotB > shootCooldown) {
                     spawnBulletB();
                     timeSinceLastShotB = 0;
@@ -271,13 +318,15 @@ namespace FarseerPrototype1 {
             }
 
             floor.Draw(spriteBatch);
+            leftWall.Draw(spriteBatch);
+            rightWall.Draw(spriteBatch);
 
             star.Draw(spriteBatch);
 
             //bars
-            spriteBatch.Draw(bar, new Rectangle(30,30,(int)characterA.Ink*2, 8), Color.White);
-            int x = GraphicsDevice.Viewport.Width - 30 - 200;
-            spriteBatch.Draw(bar, new Rectangle(x, 30, (int)characterB.Ink*2, 8), Color.White);
+            spriteBatch.Draw(bar, new Rectangle(150,50,(int)characterA.Ink*2, 8), Color.White);
+            int x = GraphicsDevice.Viewport.Width - 150 - 200;
+            spriteBatch.Draw(bar, new Rectangle(x, 50, (int)characterB.Ink*2, 8), Color.White);
 
             spriteBatch.Draw(cursorA, new Vector2(cursorAPosition.X - cursorA.Width/2, cursorAPosition.Y - cursorA.Height/2), Color.White);
             spriteBatch.Draw(cursorB, new Vector2(cursorBPosition.X - cursorB.Width/2, cursorBPosition.Y - cursorB.Height/2), Color.White);

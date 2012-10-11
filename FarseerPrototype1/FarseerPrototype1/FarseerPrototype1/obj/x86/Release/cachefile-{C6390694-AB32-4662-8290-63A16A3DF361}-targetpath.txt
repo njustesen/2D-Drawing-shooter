@@ -6,3 +6,4 @@ Content\circle.xnb
 Content\char.xnb
 Content\star.xnb
 Content\bar.xnb
+Content\wall.xnb
