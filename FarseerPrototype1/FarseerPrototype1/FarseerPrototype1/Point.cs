@@ -22,6 +22,11 @@ namespace FarseerPrototype1 {
             this.Body.FixedRotation = true;
             this.Body.Rotation = 0.0f;
             this.Body.Mass = mass;
+            this.Body.Friction = 0.2f;
+        }
+
+        public void die() {
+
         }
     }
 }

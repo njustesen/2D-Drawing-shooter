@@ -14,30 +14,59 @@ using Microsoft.Xna.Framework.Media;
 
 namespace FarseerPrototype1 {
     class Character : DrawablePhysicsObject {
-        public Character(World world, Texture2D texture, Vector2 size, float mass) : base(world, texture, size) {
 
-            body = BodyFactory.CreateCapsule(world, (size.Y-(2*size.X)) * CoordinateHelper.pixelToUnit, size.X * CoordinateHelper.pixelToUnit, mass);
-           
+        bool isJumping;
+        bool jumpCheck;
+        float ink;
+
+        public float Ink {
+            get { return ink; }
+            set { ink = value; }
+        }
+
+        public Character(World world, Texture2D texture, Vector2 size, float mass)
+            : base(world, texture, size) {
+
+            body = BodyFactory.CreateCapsule(world, (size.Y - (2 * size.X)) * CoordinateHelper.pixelToUnit, size.X * CoordinateHelper.pixelToUnit, mass);
+
             this.Body.BodyType = BodyType.Dynamic;
             this.Body.FixedRotation = true;
             this.Body.Rotation = 0.0f;
             this.Body.Mass = mass;
-
+            this.isJumping = false;
+            this.jumpCheck = false;
+            this.ink = 50;
         }
 
         public void jump() {
+            jumpCheck = false;
+            isJumping = true;
             this.Body.ApplyForce(new Vector2(0f,-29000f));
         }
 
-        public void moveRight() {
-            if (this.body.LinearVelocity.X < 3) {
-                this.Body.ApplyForce(new Vector2(600f, 0f));
+        public void checkIfJumping() {
+            if (Body.LinearVelocity.Y < 0.05 && Body.LinearVelocity.Y > -0.05){
+                if (jumpCheck) {
+                    isJumping = false;
+                } else {
+                    jumpCheck = true;
+                }
             }
         }
 
-        public void moveLeft() {
+        public bool getIsJumping() {
+            return isJumping;
+        }
+
+        public void moveRight(float amount) {
+            if (this.body.LinearVelocity.X < 3) {
+                this.Body.ApplyForce(new Vector2(amount/2 * 1000f, 0f));
+            }
+        }
+
+        public void moveLeft(float amount) {
             if (this.body.LinearVelocity.X > -3) {
-                this.Body.ApplyForce(new Vector2(-600f, 0f));
+                this.Body.ApplyForce(new Vector2(amount / 2 * 1000f, 0f));
             }
         }
     }

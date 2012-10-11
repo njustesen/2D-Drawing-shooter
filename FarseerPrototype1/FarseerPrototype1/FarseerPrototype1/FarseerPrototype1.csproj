@@ -110,6 +110,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bullet.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="CoordinateHelper.cs" />
     <Compile Include="Crate.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Star.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
