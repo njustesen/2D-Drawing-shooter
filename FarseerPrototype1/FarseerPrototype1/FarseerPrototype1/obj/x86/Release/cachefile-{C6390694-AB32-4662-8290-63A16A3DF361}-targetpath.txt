@@ -7,3 +7,4 @@ Content\char.xnb
 Content\star.xnb
 Content\bar.xnb
 Content\wall.xnb
+Content\SpriteFont1.xnb

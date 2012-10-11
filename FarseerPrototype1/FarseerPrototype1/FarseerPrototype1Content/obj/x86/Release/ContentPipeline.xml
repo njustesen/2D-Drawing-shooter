@@ -82,6 +82,15 @@
       <Output>C:\Users\niels\Documents\GitHub\2D-Drawing-shooter\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Release\Content\wall.xnb</Output>
       <Time>2012-10-11T11:02:30.403+02:00</Time>
     </Item>
+    <Item>
+      <Source>SpriteFont1.spritefont</Source>
+      <Name>SpriteFont1</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\niels\Documents\GitHub\2D-Drawing-shooter\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Release\Content\SpriteFont1.xnb</Output>
+      <Time>2012-10-11T15:33:01.876+02:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

@@ -43,6 +43,7 @@ namespace FarseerPrototype1 {
         Texture2D circle;
         Texture2D bar;
         float maxInk = 100f;
+        SpriteFont UVfont;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -63,6 +64,8 @@ namespace FarseerPrototype1 {
 
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            UVfont = Content.Load<SpriteFont>("SpriteFont1");
+
             Vector2 size = new Vector2(50, 50);
             texture = this.Content.Load<Texture2D>("crate");
             bar = this.Content.Load<Texture2D>("bar");
@@ -93,7 +96,7 @@ namespace FarseerPrototype1 {
             crateList = new List<DrawablePhysicsObject>();
             pointList = new List<Point>();
             bullets = new List<Bullet>();
-            star = new Star(world, this.Content.Load<Texture2D>("star"), new Vector2(32f, 32f), 1000);
+            star = new Star(world, this.Content.Load<Texture2D>("star"), new Vector2(32f, 32f), 1001f);
 
             prevKeyboardState = Keyboard.GetState();
         }
@@ -247,11 +250,26 @@ namespace FarseerPrototype1 {
             GamePadState padState2 = GamePad.GetState(PlayerIndex.Two);
 
             // Update cursor position
-            cursorAPosition.X += padState1.ThumbSticks.Right.X*10;
-            cursorAPosition.Y -= padState1.ThumbSticks.Right.Y*10;
+            float xMove1 = padState1.ThumbSticks.Right.X * 10;
+            float yMove1 = padState1.ThumbSticks.Right.Y * 10 * -1;
+            float xMove2 = padState2.ThumbSticks.Right.X * 10;
+            float yMove2 = padState2.ThumbSticks.Right.Y * 10 * -1;
 
-            cursorBPosition.X += padState2.ThumbSticks.Right.X*10;
-            cursorBPosition.Y -= padState2.ThumbSticks.Right.Y*10;
+            if ((xMove1 < 0 && cursorAPosition.X > 50) || (xMove1 > 0 && cursorAPosition.X < GraphicsDevice.Viewport.Width - 50)){
+                cursorAPosition.X += xMove1;
+            }
+
+            if ((yMove1 < 0 && cursorAPosition.Y > 0) || (yMove1 > 0 && cursorAPosition.Y < GraphicsDevice.Viewport.Height - 50)){
+                cursorAPosition.Y += yMove1;
+            }
+
+            if ((xMove2 < 0 && cursorBPosition.X > 50) || (xMove2 > 0 && cursorBPosition.X < GraphicsDevice.Viewport.Width - 50)) {
+                cursorBPosition.X += xMove2;
+            }
+
+            if ((yMove2 < 0 && cursorBPosition.Y > 0) || (yMove2 > 0 && cursorBPosition.Y < GraphicsDevice.Viewport.Height - 50)) {
+                cursorBPosition.Y += yMove2;
+            }
 
             if (padState1.Buttons.A == ButtonState.Pressed && !characterA.getIsJumping()) {
                 characterA.jump();
@@ -333,6 +351,10 @@ namespace FarseerPrototype1 {
 
             characterA.Draw(spriteBatch);
             characterB.Draw(spriteBatch);
+
+            spriteBatch.DrawString(UVfont, "Score: " + characterA.Score, new Vector2(150, 10), Color.Red);
+
+            spriteBatch.DrawString(UVfont, "Score: " + characterB.Score, new Vector2(GraphicsDevice.Viewport.Width-350, 10), Color.Blue);
 
             spriteBatch.End();
 

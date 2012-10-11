@@ -18,6 +18,12 @@ namespace FarseerPrototype1 {
         bool isJumping;
         bool jumpCheck;
         float ink;
+        int score = 0;
+
+        public int Score {
+            get { return score; }
+            set { score = value; }
+        }
 
         public float Ink {
             get { return ink; }
@@ -36,6 +42,14 @@ namespace FarseerPrototype1 {
             this.isJumping = false;
             this.jumpCheck = false;
             this.ink = 50;
+            Body.OnCollision += Body_OnCollision; // or use a lambda
+        }
+
+        bool Body_OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact){
+            if (fixtureB.Body.Mass == 80.5051956f) {
+                score++;
+            }
+            return true;
         }
 
         public void jump() {

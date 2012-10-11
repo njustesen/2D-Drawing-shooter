@@ -33,3 +33,4 @@ C:\Users\niels\Documents\GitHub\2D-Drawing-shooter\FarseerPrototype1\FarseerProt
 C:\Users\niels\Documents\GitHub\2D-Drawing-shooter\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\obj\x86\Release\Decl\FarseerPrototype1.exe
 C:\Users\niels\Documents\GitHub\2D-Drawing-shooter\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\obj\x86\Release\Decl\FarseerPrototype1.pdb
 C:\Users\niels\Documents\GitHub\2D-Drawing-shooter\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Release\Content\wall.xnb
+C:\Users\niels\Documents\GitHub\2D-Drawing-shooter\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Release\Content\SpriteFont1.xnb
