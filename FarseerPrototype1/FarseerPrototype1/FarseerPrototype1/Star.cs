@@ -42,7 +42,7 @@ namespace FarseerPrototype1 {
             fixtureB.Body.BodyType = BodyType.Dynamic;
             if (fixtureB.Body.Mass == 101){
                 Random rand = new Random();
-                this.Position = new Vector2(rand.Next(900), rand.Next(700));
+                this.Position = new Vector2(100 + rand.Next(800), 100 + rand.Next(600));
                 realPosition = Position;
             }
             return true;

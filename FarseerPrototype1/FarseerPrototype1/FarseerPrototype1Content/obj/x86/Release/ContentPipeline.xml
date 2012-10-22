@@ -62,7 +62,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\niels\Documents\GitHub\2D-Drawing-shooter\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Release\Content\star.xnb</Output>
-      <Time>2012-10-05T14:17:19.484+02:00</Time>
+      <Time>2012-10-22T15:16:45.06+02:00</Time>
     </Item>
     <Item>
       <Source>bar.png</Source>
@@ -90,6 +90,33 @@
       <Options>None</Options>
       <Output>C:\Users\niels\Documents\GitHub\2D-Drawing-shooter\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Release\Content\SpriteFont1.xnb</Output>
       <Time>2012-10-11T15:33:01.876+02:00</Time>
+    </Item>
+    <Item>
+      <Source>charRed.png</Source>
+      <Name>charRed</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\niels\Documents\GitHub\2D-Drawing-shooter\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Release\Content\charRed.xnb</Output>
+      <Time>2012-10-22T15:27:43.6+02:00</Time>
+    </Item>
+    <Item>
+      <Source>charBlue.png</Source>
+      <Name>charBlue</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\niels\Documents\GitHub\2D-Drawing-shooter\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Release\Content\charBlue.xnb</Output>
+      <Time>2012-10-22T15:28:12.813+02:00</Time>
+    </Item>
+    <Item>
+      <Source>crosshair.png</Source>
+      <Name>crosshair</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\niels\Documents\GitHub\2D-Drawing-shooter\FarseerPrototype1\FarseerPrototype1\FarseerPrototype1\bin\x86\Release\Content\crosshair.xnb</Output>
+      <Time>2012-10-22T15:29:55.722+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

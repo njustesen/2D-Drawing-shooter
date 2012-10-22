@@ -50,7 +50,7 @@ namespace FarseerPrototype1 {
             DisplayMode displayMode = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode;
             graphics.PreferredBackBufferWidth = displayMode.Width;
             graphics.PreferredBackBufferHeight = displayMode.Height;
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
             world = new World(new Vector2(0, 9.8f));
             worldSize = new Vector2(1000, 800);
@@ -74,8 +74,8 @@ namespace FarseerPrototype1 {
 
             circle = Content.Load<Texture2D>("circle");
 
-            cursorA = this.Content.Load<Texture2D>("cursor");
-            cursorB = this.Content.Load<Texture2D>("cursor");
+            cursorA = this.Content.Load<Texture2D>("crosshair");
+            cursorB = this.Content.Load<Texture2D>("crosshair");
 
             // Floor
             floor = new Floor(world, Content.Load<Texture2D>("floor"), new Vector2(GraphicsDevice.Viewport.Width, 100.0f), 10000010.0f);
@@ -87,10 +87,10 @@ namespace FarseerPrototype1 {
             rightWall = new Wall(world, Content.Load<Texture2D>("wall"), new Vector2(100.0f, GraphicsDevice.Viewport.Height), 10000001.0f);
             rightWall.Position = new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height / 2);
 
-            characterA = new Character(world, this.Content.Load<Texture2D>("char"), new Vector2(20f, 60f), 101f);
+            characterA = new Character(world, this.Content.Load<Texture2D>("charRed"), new Vector2(20f, 60f), 101f);
             characterA.Position = new Vector2(150, 50);
 
-            characterB = new Character(world, this.Content.Load<Texture2D>("char"), new Vector2(20f, 60f), 101f);
+            characterB = new Character(world, this.Content.Load<Texture2D>("charBlue"), new Vector2(20f, 60f), 101f);
             characterB.Position = new Vector2(GraphicsDevice.Viewport.Width - 150, 50);
 
             crateList = new List<DrawablePhysicsObject>();
@@ -204,10 +204,10 @@ namespace FarseerPrototype1 {
             }
 
             if (characterA.Ink < maxInk) {
-                characterA.Ink += 0.03f * 100;
+                characterA.Ink += 0.03f * 5;
             }
             if (characterB.Ink < maxInk) {
-                characterB.Ink += 0.03f * 100;
+                characterB.Ink += 0.03f * 5;
             }
  
             // Update timeSinceLastShot
@@ -275,45 +275,50 @@ namespace FarseerPrototype1 {
                 characterA.jump();
             }
             if (padState1.ThumbSticks.Left.X > 0) {
-                characterA.moveRight(padState1.ThumbSticks.Left.X);
-            }
-            if (padState1.ThumbSticks.Left.X < 0) {
-                characterA.moveLeft(padState1.ThumbSticks.Left.X);
+                characterA.moveRight(padState1.ThumbSticks.Left.X * 2);
+                characterA.Body.Friction = Math.Max(0.2f, 0.1f);
+            } else if (padState1.ThumbSticks.Left.X < 0) {
+                characterA.moveLeft(padState1.ThumbSticks.Left.X * 2);
+                characterA.Body.Friction = Math.Max(0.2f, 0.1f);
+            } else {
+                characterA.Body.Friction = Math.Max(0.2f, 10);
             }
             if (padState1.Buttons.RightShoulder == ButtonState.Pressed && characterA.Ink > 0) {
                 SpawnPoint((int)cursorAPosition.X, (int)cursorAPosition.Y);
-                characterA.Ink -= 3f;
+                characterA.Ink -= 1f;
             }
-            if (padState1.Triggers.Right > 0.9f && characterA.Ink > 0) {
+            if (padState1.Buttons.LeftShoulder == ButtonState.Pressed && characterA.Ink > 0) {
                 if (timeSinceLastShotA > shootCooldown) {
                     spawnBulletA();
                     timeSinceLastShotA = 0;
                     characterA.Ink -= 3f;
                 }
             }
-            characterA.Body.Friction = Math.Max(0.2f,padState1.Triggers.Left*10);
+            
 
             if (padState2.Buttons.A == ButtonState.Pressed && !characterB.getIsJumping()) {
                 characterB.jump();
             }
             if (padState2.ThumbSticks.Left.X > 0) {
-                characterB.moveRight(padState2.ThumbSticks.Left.X);
-            }
-            if (padState2.ThumbSticks.Left.X < 0) {
-                characterB.moveLeft(padState2.ThumbSticks.Left.X);
+                characterB.moveRight(padState2.ThumbSticks.Left.X * 2);
+                characterB.Body.Friction = Math.Max(0.2f, 0.1f);
+            } else if (padState2.ThumbSticks.Left.X < 0) {
+                characterB.moveLeft(padState2.ThumbSticks.Left.X * 2);
+                characterB.Body.Friction = Math.Max(0.2f, 0.1f);
+            } else {
+                characterB.Body.Friction = Math.Max(0.2f, 10);
             }
             if (padState2.Buttons.RightShoulder == ButtonState.Pressed && characterB.Ink > 0) {
                 SpawnPoint((int)cursorBPosition.X, (int)cursorBPosition.Y);
                 characterB.Ink -= 1f;
             }
-            if (padState2.Triggers.Right > 0.9f && characterB.Ink > 0) {
+            if (padState2.Buttons.LeftShoulder == ButtonState.Pressed && characterB.Ink > 0) {
                 if (timeSinceLastShotB > shootCooldown) {
                     spawnBulletB();
                     timeSinceLastShotB = 0;
-                    characterB.Ink -= 1f;
+                    characterB.Ink -= 3f;
                 }
             }
-            characterB.Body.Friction = Math.Max(0.2f, padState2.Triggers.Left * 10);
 
             base.Update(gameTime);
         }

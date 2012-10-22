@@ -26,7 +26,7 @@ namespace FarseerPrototype1 {
 
         bool Body_OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact){       
             if (fixtureB.Body.Mass == 101){
-                fixtureB.Body.ApplyForce(new Vector2(this.Body.LinearVelocity.X*1000, this.Body.LinearVelocity.Y*1000));
+                fixtureB.Body.ApplyForce(new Vector2(this.Body.LinearVelocity.X*5000, this.Body.LinearVelocity.Y*5000));
             } else if (fixtureB.Body.Mass == 12.7999992f) {
                 fixtureA.Body.IsSensor = true;
             }
