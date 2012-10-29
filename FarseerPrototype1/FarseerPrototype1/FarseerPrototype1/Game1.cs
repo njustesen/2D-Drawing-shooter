@@ -31,14 +31,25 @@ namespace FarseerPrototype1 {
         float elapseTime;
         int frameCounter;
         int FPS;
+        
         Texture2D cursorA;
         Vector2 cursorAPosition; //<--wiimote IR-sensor
         Texture2D cursorB;
         Vector2 cursorBPosition;
+  /*      Texture2D cursorC;
+        Vector2 cursorCPosition;
+        Texture2D cursorD;
+        Vector2 cursorDPosition;
+  */      
         Character characterA;
         Character characterB;
+   /*     Character characterC;
+        Character characterD;
+   */     
         int timeSinceLastShotA;
         int timeSinceLastShotB;
+        int timeSinceLastShotC;
+        int timeSinceLastShotD;
         float shootCooldown = 100;
         Star star;
         Texture2D circle;
@@ -56,7 +67,17 @@ namespace FarseerPrototype1 {
         bool wii2A = false;
         bool wii2B = false;
         bool nunchuck2Z;
-        
+        //wiimote3
+  /*      Wiimote myWiimote3;
+        bool wii3A = false;
+        bool wii3B = false;
+        bool nunchuck3Z;
+        //wiimote4
+        Wiimote myWiimote4;
+        bool wii4A = false;
+        bool wii4B = false;
+        bool nunchuck4Z;
+   */     
         int screenWidth;
         int screenHeight;
 
@@ -110,6 +131,12 @@ namespace FarseerPrototype1 {
             characterB = new Character(world, this.Content.Load<Texture2D>("charBlue"), new Vector2(20f, 60f), 101f);
             characterB.Position = new Vector2(GraphicsDevice.Viewport.Width - 150, 50);
 
+    //        characterC = new Character(world, this.Content.Load<Texture2D>("charRed"), new Vector2(20f, 60f), 101f);
+    //        characterC.Position = new Vector2(350, 50);
+
+    //        characterD = new Character(world, this.Content.Load<Texture2D>("charBlue"), new Vector2(20f, 60f), 101f);
+    //        characterD.Position = new Vector2(GraphicsDevice.Viewport.Width - 350, 50);
+
             crateList = new List<DrawablePhysicsObject>();
             pointList = new List<Point>();
             bullets = new List<Bullet>();
@@ -117,18 +144,20 @@ namespace FarseerPrototype1 {
 
             prevKeyboardState = Keyboard.GetState();
 
-           
-
             wiimotes = new WiimoteCollection();
             wiimotes.FindAllWiimotes();
 
             foreach(Wiimote wm in wiimotes){
+                
+
                 wm.Connect();
                 wm.SetReportType(InputReport.IRExtensionAccel, true);
             }
 
             myWiimote1 = wiimotes[0];
-            myWiimote2 = wiimotes[1];
+     //       myWiimote2 = wiimotes[1];
+      //      myWiimote3 = wiimotes[2];
+      //      myWiimote4 = wiimotes[3];
       
         }
 
@@ -152,14 +181,26 @@ namespace FarseerPrototype1 {
                 nunchuck1Z = true;
             else nunchuck1Z = false;
 
-            characterA.moveRight(MathHelper.Clamp(myWiimote1.WiimoteState.NunchukState.RawJoystick.X - 128, -100, 100)/50);
-            characterA.moveLeft(MathHelper.Clamp(myWiimote1.WiimoteState.NunchukState.RawJoystick.X - 128, -100, 100) /50);
+            if (myWiimote1.WiimoteState.NunchukState.RawJoystick.X - 128 > 10)
+            {
+                characterA.moveRight(MathHelper.Clamp(myWiimote1.WiimoteState.NunchukState.RawJoystick.X - 128, -100, 100) / 50);
+                characterA.Body.Friction = Math.Max(0.2f, 0.1f);
+            }
+            else if (myWiimote1.WiimoteState.NunchukState.RawJoystick.X - 128 < -10)
+            {
+                characterA.moveLeft(MathHelper.Clamp(myWiimote1.WiimoteState.NunchukState.RawJoystick.X - 128, -100, 100) / 50);
+                characterA.Body.Friction = Math.Max(0.2f, 0.1f);
+            }
+            else
+            {
+                characterA.Body.Friction = Math.Max(0.2f, 10f);
+            }
 
             cursorAPosition.X = -((int)computeIntervals(myWiimote1.WiimoteState.IRState.RawMidpoint.X, 0, 1023, 0, screenWidth)) + screenWidth;
             cursorAPosition.Y = ((int)computeIntervals(myWiimote1.WiimoteState.IRState.RawMidpoint.Y, 0, 767, 0, screenHeight));
 
             //Check for player 2
-            if (myWiimote2.WiimoteState.ButtonState.A)
+   /*         if (myWiimote2.WiimoteState.ButtonState.A)
                 wii2A = true;
             else wii2A = false;
 
@@ -176,7 +217,45 @@ namespace FarseerPrototype1 {
       
             cursorBPosition.X = -((int)computeIntervals(myWiimote2.WiimoteState.IRState.RawMidpoint.X, 0, 1023, 0, screenWidth)) + screenWidth;
             cursorBPosition.Y = ((int)computeIntervals(myWiimote2.WiimoteState.IRState.RawMidpoint.Y, 0, 767, 0, screenHeight));
-        }
+*/
+  /*          //Check for player 3
+            if (myWiimote3.WiimoteState.ButtonState.A)
+                wii3A = true;
+            else wii3A = false;
+
+            if (myWiimote3.WiimoteState.ButtonState.B)
+                wii3B = true;
+            else wii3B = false;
+
+            if (myWiimote3.WiimoteState.NunchukState.Z)
+                nunchuck3Z = true;
+            else nunchuck3Z = false;
+
+            characterC.moveRight(MathHelper.Clamp(myWiimote3.WiimoteState.NunchukState.RawJoystick.X - 128, -100, 100) / 50);
+            characterC.moveLeft(MathHelper.Clamp(myWiimote3.WiimoteState.NunchukState.RawJoystick.X - 128, -100, 100) / 50);
+
+            cursorCPosition.X = -((int)computeIntervals(myWiimote3.WiimoteState.IRState.RawMidpoint.X, 0, 1023, 0, screenWidth)) + screenWidth;
+            cursorCPosition.Y = ((int)computeIntervals(myWiimote3.WiimoteState.IRState.RawMidpoint.Y, 0, 767, 0, screenHeight));
+
+            //Check for player 4
+            if (myWiimote4.WiimoteState.ButtonState.A)
+                wii4A = true;
+            else wii4A = false;
+
+            if (myWiimote4.WiimoteState.ButtonState.B)
+                wii4B = true;
+            else wii4B = false;
+
+            if (myWiimote4.WiimoteState.NunchukState.Z)
+                nunchuck4Z = true;
+            else nunchuck4Z = false;
+
+            characterC.moveRight(MathHelper.Clamp(myWiimote4.WiimoteState.NunchukState.RawJoystick.X - 128, -100, 100) / 50);
+            characterC.moveLeft(MathHelper.Clamp(myWiimote4.WiimoteState.NunchukState.RawJoystick.X - 128, -100, 100) / 50);
+
+            cursorCPosition.X = -((int)computeIntervals(myWiimote4.WiimoteState.IRState.RawMidpoint.X, 0, 1023, 0, screenWidth)) + screenWidth;
+            cursorCPosition.Y = ((int)computeIntervals(myWiimote4.WiimoteState.IRState.RawMidpoint.Y, 0, 767, 0, screenHeight));
+*/        }
 
         //WIIII!!!!!!
         public double computeIntervals(double numberToCompute, double interval1Start, double interval1End, double interval2Start, double interval2End)
@@ -256,7 +335,41 @@ namespace FarseerPrototype1 {
             bullet.Body.Friction = 0.5f;
             bullets.Add(bullet);
         }
+/*
+        private void spawnBulletC()
+        {
+            // Ignore if to close to character
+            Vector2 angle = new Vector2(cursorCPosition.X - characterC.Position.X, cursorCPosition.Y - characterC.Position.Y);
 
+            // Convert to unit length
+            float x = (float)(angle.X / Math.Sqrt((double)((angle.X * angle.X) + (angle.Y * angle.Y))));
+            float y = (float)(angle.Y / Math.Sqrt((double)((angle.X * angle.X) + (angle.Y * angle.Y))));
+            angle = new Vector2(x, y);
+
+            angle *= 100;
+
+            Bullet bullet = new Bullet(world, circle, new Vector2(12f, 12f), 1.1f, characterC.Position + angle / 2, angle);
+            bullet.Body.Friction = 0.5f;
+            bullets.Add(bullet);
+        }
+
+        private void spawnBulletD()
+        {
+            // Ignore if to close to character
+            Vector2 angle = new Vector2(cursorDPosition.X - characterD.Position.X, cursorDPosition.Y - characterD.Position.Y);
+
+            // Convert to unit length
+            float x = (float)(angle.X / Math.Sqrt((double)((angle.X * angle.X) + (angle.Y * angle.Y))));
+            float y = (float)(angle.Y / Math.Sqrt((double)((angle.X * angle.X) + (angle.Y * angle.Y))));
+            angle = new Vector2(x, y);
+
+            angle *= 100;
+
+            Bullet bullet = new Bullet(world, circle, new Vector2(12f, 12f), 1.1f, characterD.Position + angle / 2, angle);
+            bullet.Body.Friction = 0.5f;
+            bullets.Add(bullet);
+        }
+*/
         private double distance(float x1, float y1, float x2, float y2) {
             double dx = x1 - x2;         //horizontal difference 
             double dy = y1 - y2;         //vertical difference 
@@ -309,10 +422,14 @@ namespace FarseerPrototype1 {
             // Update timeSinceLastShot
             timeSinceLastShotA += gameTime.ElapsedGameTime.Milliseconds;
             timeSinceLastShotB += gameTime.ElapsedGameTime.Milliseconds;
+      //      timeSinceLastShotC += gameTime.ElapsedGameTime.Milliseconds;
+      //      timeSinceLastShotD += gameTime.ElapsedGameTime.Milliseconds;
 
             // Check if characters are jumping
             characterA.checkIfJumping();
             characterB.checkIfJumping();
+       //     characterC.checkIfJumping();
+       //     characterD.checkIfJumping();
 
             float time = Math.Min(100,((float)gameTime.ElapsedGameTime.TotalSeconds));
 
@@ -346,11 +463,11 @@ namespace FarseerPrototype1 {
             GamePadState padState2 = GamePad.GetState(PlayerIndex.Two);
 
             // Update cursor position
-            float xMove1 = padState1.ThumbSticks.Right.X * 10;
-            float yMove1 = padState1.ThumbSticks.Right.Y * 10 * -1;
-            float xMove2 = padState2.ThumbSticks.Right.X * 10;
-            float yMove2 = padState2.ThumbSticks.Right.Y * 10 * -1;
-
+     //       float xMove1 = padState1.ThumbSticks.Right.X * 10;
+      //      float yMove1 = padState1.ThumbSticks.Right.Y * 10 * -1;
+            float xMove1 = padState1.ThumbSticks.Right.X * 10;              //padstate 2
+            float yMove1 = padState1.ThumbSticks.Right.Y * 10 * -1;         //padstate 2
+/*
             if ((xMove1 < 0 && cursorAPosition.X > 50) || (xMove1 > 0 && cursorAPosition.X < GraphicsDevice.Viewport.Width - 50)){
                 cursorAPosition.X += xMove1;
             }
@@ -358,25 +475,24 @@ namespace FarseerPrototype1 {
             if ((yMove1 < 0 && cursorAPosition.Y > 0) || (yMove1 > 0 && cursorAPosition.Y < GraphicsDevice.Viewport.Height - 50)){
                 cursorAPosition.Y += yMove1;
             }
-
-            if ((xMove2 < 0 && cursorBPosition.X > 50) || (xMove2 > 0 && cursorBPosition.X < GraphicsDevice.Viewport.Width - 50)) {
-                cursorBPosition.X += xMove2;
+*/
+            if ((xMove1 < 0 && cursorBPosition.X > 50) || (xMove1 > 0 && cursorBPosition.X < GraphicsDevice.Viewport.Width - 50)) {
+                cursorBPosition.X += xMove1;
             }
 
-            if ((yMove2 < 0 && cursorBPosition.Y > 0) || (yMove2 > 0 && cursorBPosition.Y < GraphicsDevice.Viewport.Height - 50)) {
-                cursorBPosition.Y += yMove2;
+            if ((yMove1 < 0 && cursorBPosition.Y > 0) || (yMove1 > 0 && cursorBPosition.Y < GraphicsDevice.Viewport.Height - 50)) {
+                cursorBPosition.Y += yMove1;
             }
 
-      //      if (padState1.Buttons.A == Microsoft.Xna.Framework.Input.ButtonState.Pressed && !characterA.getIsJumping()) {
-      //          characterA.jump();
-      //      }
-            
-            //nu med WIIII!!!!-support PLAYER1 jump
-            if (nunchuck1Z && !characterA.getIsJumping())
-            {
-                characterA.jump();
-            }
+      
+            //////////////////////////////////////////////////////////////////
+            //                          PLAYER 1                            //
+            //////////////////////////////////////////////////////////////////
 
+            //      if (padState1.Buttons.A == Microsoft.Xna.Framework.Input.ButtonState.Pressed && !characterA.getIsJumping()) {
+            //          characterA.jump();
+            //      }
+            /*
             if (padState1.ThumbSticks.Left.X > 0) {
                 characterA.moveRight(padState1.ThumbSticks.Left.X * 2);
                 characterA.Body.Friction = Math.Max(0.2f, 0.1f);
@@ -386,26 +502,35 @@ namespace FarseerPrototype1 {
             } else {
                 characterA.Body.Friction = Math.Max(0.2f, 10);
             }
-      /*      if (padState1.Buttons.RightShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterA.Ink > 0)
+
+                  if (padState1.Buttons.RightShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterA.Ink > 0)
+           {
+               SpawnPoint((int)cursorAPosition.X, (int)cursorAPosition.Y);
+               characterA.Ink -= 1f;
+           }
+     
+                if (padState1.Buttons.LeftShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterA.Ink > 0)
+                {
+                    if (timeSinceLastShotA > shootCooldown) {
+                        spawnBulletA();
+                        timeSinceLastShotA = 0;
+                        characterA.Ink -= 3f;
+                    }
+                }
+    */  
+            //nu med WIIII!!!!-support PLAYER1 jump
+            if (nunchuck1Z && !characterA.getIsJumping())
             {
-                SpawnPoint((int)cursorAPosition.X, (int)cursorAPosition.Y);
-                characterA.Ink -= 1f;
+                characterA.jump();
             }
-      */    //nu med WIIIII!!!!-support PLAYER1 draw
+
+         //nu med WIIIII!!!!-support PLAYER1 draw
             if (wii1A && characterA.Ink > 0)
             {
                 SpawnPoint((int)cursorAPosition.X, (int)cursorAPosition.Y);
                 characterA.Ink -= 1f;
             }
-      /*    if (padState1.Buttons.LeftShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterA.Ink > 0)
-            {
-                if (timeSinceLastShotA > shootCooldown) {
-                    spawnBulletA();
-                    timeSinceLastShotA = 0;
-                    characterA.Ink -= 3f;
-                }
-            }
-*/          //nu med WIIIIII!!!!!-support PLAYER1 shoot
+             //nu med WIIIIII!!!!!-support PLAYER1 shoot
             if (wii1B && characterA.Ink > 0)
             {
                 if (timeSinceLastShotA > shootCooldown)
@@ -415,52 +540,57 @@ namespace FarseerPrototype1 {
                     characterA.Ink -= 3f;
                 }
             }
+            //////////////////////////////////////////////////////////////////
+            //                          PLAYER 2                            //
+            //////////////////////////////////////////////////////////////////
 
-    /*        if (padState2.Buttons.A == Microsoft.Xna.Framework.Input.ButtonState.Pressed && !characterB.getIsJumping())
+            if (padState1.Buttons.A == Microsoft.Xna.Framework.Input.ButtonState.Pressed && !characterB.getIsJumping())
             {
                 characterB.jump();
             }
-  */
+  
+            if (padState1.ThumbSticks.Left.X > 0) {
+               characterB.moveRight(padState1.ThumbSticks.Left.X * 2);
+               characterB.Body.Friction = Math.Max(0.2f, 0.1f);
+           } else if (padState1.ThumbSticks.Left.X < 0) {
+               characterB.moveLeft(padState1.ThumbSticks.Left.X * 2);
+               characterB.Body.Friction = Math.Max(0.2f, 0.1f);
+           } else {
+               characterB.Body.Friction = Math.Max(0.2f, 10);
+           }
+   
+           if (padState1.Buttons.RightShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterB.Ink > 0)
+               {
+               SpawnPoint((int)cursorBPosition.X, (int)cursorBPosition.Y);
+               characterB.Ink -= 1f;
+               }
+              
+           if (padState1.Buttons.LeftShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterB.Ink > 0)
+            {
+             if (timeSinceLastShotB > shootCooldown) {
+                 spawnBulletB();
+                  timeSinceLastShotB = 0;
+                  characterB.Ink -= 3f;
+              }
+           }
+
+
             //nu med WIIII!!!!-support PLAYER2 jump
-            if (nunchuck2Z && !characterB.getIsJumping())
+ /*           if (nunchuck2Z && !characterB.getIsJumping())
             {
                 characterB.jump();
             }
 
-            if (padState2.ThumbSticks.Left.X > 0) {
-                characterB.moveRight(padState2.ThumbSticks.Left.X * 2);
-                characterB.Body.Friction = Math.Max(0.2f, 0.1f);
-            } else if (padState2.ThumbSticks.Left.X < 0) {
-                characterB.moveLeft(padState2.ThumbSticks.Left.X * 2);
-                characterB.Body.Friction = Math.Max(0.2f, 0.1f);
-            } else {
-                characterB.Body.Friction = Math.Max(0.2f, 10);
-            }
-            
-   /*         if (padState2.Buttons.RightShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterB.Ink > 0)
-            {
-                SpawnPoint((int)cursorBPosition.X, (int)cursorBPosition.Y);
-                characterB.Ink -= 1f;
-            }
-     */     
             //nu med WIIIIIII!!!!-support PLAYER2 draw
-            if (padState2.Buttons.RightShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterB.Ink > 0)
+            if (wii2A && characterB.Ink > 0)
             {
                 SpawnPoint((int)cursorBPosition.X, (int)cursorBPosition.Y);
                 characterB.Ink -= 1f;
             }
 
-     /*       if (padState2.Buttons.LeftShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterB.Ink > 0)
-            {
-                if (timeSinceLastShotB > shootCooldown) {
-                    spawnBulletB();
-                    timeSinceLastShotB = 0;
-                    characterB.Ink -= 3f;
-                }
-            }
-*/
+    
             //nu med WIIIIII!!!!!-support PLAYER 2 shoot
-            if (padState2.Buttons.LeftShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterB.Ink > 0)
+            if (wii2B && characterB.Ink > 0)
             {
                 if (timeSinceLastShotB > shootCooldown)
                 {
@@ -469,7 +599,135 @@ namespace FarseerPrototype1 {
                     characterB.Ink -= 3f;
                 }
             }
+*/
+            //////////////////////////////////////////////////////////////////
+            //                          PLAYER 3                            //
+            //////////////////////////////////////////////////////////////////
+          
+        /*  if (padState3.Buttons.A == Microsoft.Xna.Framework.Input.ButtonState.Pressed && !characterC.getIsJumping())
+            {
+                characterC.jump();
+            }
+                     if (padState3.ThumbSticks.Left.X > 0)
+           {
+               characterC.moveRight(padState3.ThumbSticks.Left.X * 2);
+               characterC.Body.Friction = Math.Max(0.2f, 0.1f);
+           }
+           else if (padState3.ThumbSticks.Left.X < 0)
+           {
+               characterC.moveLeft(padState3.ThumbSticks.Left.X * 2);
+               characterC.Body.Friction = Math.Max(0.2f, 0.1f);
+           }
+           else
+           {
+               characterC.Body.Friction = Math.Max(0.2f, 10);
+           }
 
+           /*         if (padState3.Buttons.RightShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterC.Ink > 0)
+                    {
+                        SpawnPoint((int)cursorCPosition.X, (int)cursorCPosition.Y);
+                        characterC.Ink -= 1f;
+                    }
+             
+                   if (padState3.Buttons.LeftShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterC.Ink > 0)
+                   {
+                       if (timeSinceLastShotC > shootCooldown) {
+                           spawnBulletC();
+                           timeSinceLastShotC = 0;
+                           characterC.Ink -= 3f;
+                       }
+                   }
+       */
+  /*          //nu med WIIII!!!!-support PLAYER3 jump
+            if (nunchuck3Z && !characterC.getIsJumping())
+            {
+                characterC.jump();
+            }
+
+  
+            //nu med WIIIIIII!!!!-support PLAYER3 draw
+            if (wii3A && characterC.Ink > 0)
+            {
+                SpawnPoint((int)cursorCPosition.X, (int)cursorCPosition.Y);
+                characterC.Ink -= 1f;
+            }
+
+            
+            //nu med WIIIIII!!!!!-support PLAYER 3 shoot
+            if (wii3B && characterC.Ink > 0)
+            {
+                if (timeSinceLastShotC > shootCooldown)
+                {
+                    spawnBulletC();
+                    timeSinceLastShotC = 0;
+                    characterC.Ink -= 3f;
+                }
+            }
+*/
+            //////////////////////////////////////////////////////////////////
+            //                          PLAYER 4                            //
+            //////////////////////////////////////////////////////////////////
+
+            /*  if (padState4.Buttons.A == Microsoft.Xna.Framework.Input.ButtonState.Pressed && !characterD.getIsJumping())
+                {
+                    characterD.jump();
+                }
+                         if (padState4.ThumbSticks.Left.X > 0)
+               {
+                   characterD.moveRight(padState4.ThumbSticks.Left.X * 2);
+                   characterD.Body.Friction = Math.Max(0.2f, 0.1f);
+               }
+               else if (padState4.ThumbSticks.Left.X < 0)
+               {
+                   characterD.moveLeft(padState4.ThumbSticks.Left.X * 2);
+                   characterD.Body.Friction = Math.Max(0.2f, 0.1f);
+               }
+               else
+               {
+                   characterD.Body.Friction = Math.Max(0.2f, 10);
+               }
+
+               /*         if (padState4.Buttons.RightShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterD.Ink > 0)
+                        {
+                            SpawnPoint((int)cursorCPosition.X, (int)cursorCPosition.Y);
+                            characterD.Ink -= 1f;
+                        }
+             
+                       if (padState4.Buttons.LeftShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && characterD.Ink > 0)
+                       {
+                           if (timeSinceLastShotD > shootCooldown) {
+                               spawnBulletD();
+                               timeSinceLastShotD = 0;
+                               characterD.Ink -= 3f;
+                           }
+                       }
+           */
+            //nu med WIIII!!!!-support PLAYER4 jump
+/*            if (nunchuck4Z && !characterD.getIsJumping())
+            {
+                characterD.jump();
+            }
+
+
+            //nu med WIIIIIII!!!!-support PLAYER4 draw
+            if (wii4A && characterD.Ink > 0)
+            {
+                SpawnPoint((int)cursorCPosition.X, (int)cursorCPosition.Y);
+                characterD.Ink -= 1f;
+            }
+
+
+            //nu med WIIIIII!!!!!-support PLAYER 4 shoot
+            if (wii4B && characterD.Ink > 0)
+            {
+                if (timeSinceLastShotD > shootCooldown)
+                {
+                    spawnBulletD();
+                    timeSinceLastShotD = 0;
+                    characterD.Ink -= 3f;
+                }
+            }
+*/
             //WIIIII!!!!
             wiimoteUpdate();
 
