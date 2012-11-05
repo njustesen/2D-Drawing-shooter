@@ -108,8 +108,9 @@
     <Reference Include="System.Net">
       <Private>False</Private>
     </Reference>
-    <Reference Include="WiimoteLib">
-      <HintPath>..\..\..\..\..\..\Desktop\ITU\WiimotLib_1.7\WiimoteLib.dll</HintPath>
+    <Reference Include="WiimoteLib, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Desktop\ITU\WiimoteLib_1.8\WiimoteLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

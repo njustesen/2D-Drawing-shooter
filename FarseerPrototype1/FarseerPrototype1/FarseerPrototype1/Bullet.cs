@@ -29,6 +29,8 @@ namespace FarseerPrototype1 {
                 fixtureB.Body.ApplyForce(new Vector2(this.Body.LinearVelocity.X*5000, this.Body.LinearVelocity.Y*5000));
             } else if (fixtureB.Body.Mass == 12.7999992f) {
                 fixtureA.Body.IsSensor = true;
+            } else if (fixtureB.Body.Mass == 13.66f) {
+                 fixtureA.Body.IsSensor = true;
             }
             
             return true;
