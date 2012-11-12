@@ -1,5 +1,8 @@
 var score:int = 0;
 var forward:Vector3 = Vector3(0,0,0);
+var scoreBar:GUIText;
+var inkBar:Transform;
+var inkBarMaxWidth:float;
 var maxInk:float;
 var currentInk:float;
 var inkPerSecond:float;
@@ -20,7 +23,10 @@ function Update(){
 	if (currentInk >= maxInk){
 		currentInk = maxInk;
 	}
-
+	
+	updateInkBar();
+	updateScoreBar();
+	
 }
 
 function powerUp(){
@@ -32,5 +38,17 @@ function powerUp(){
 	
 	// Increases jump
 	motor.jumping.baseHeight += 2.0;
+	
+}
+
+function updateInkBar(){
+
+	inkBar.transform.localScale.y = inkBarMaxWidth / ( maxInk / currentInk );
+
+}
+
+function updateScoreBar(){
+	
+	scoreBar.text = "" + score;
 	
 }

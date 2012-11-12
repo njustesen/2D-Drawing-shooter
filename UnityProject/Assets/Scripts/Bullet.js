@@ -12,6 +12,8 @@ function OnTriggerEnter (other:Collider) {
 		
 		var player:Player = other.gameObject.GetComponent("Player");
 		
+		Destroy (gameObject);
+		
 	} else if (other.gameObject.CompareTag("Wall")){
 	
 		Destroy (gameObject);

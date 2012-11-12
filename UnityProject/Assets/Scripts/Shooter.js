@@ -16,6 +16,8 @@ function Update () {
 		Shoot();
 	
 		player.currentInk -= player.shootCost;
+		
+		player.updateInkBar();
 	
 	}
 	

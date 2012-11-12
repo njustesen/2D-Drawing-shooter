@@ -21,6 +21,7 @@ function Update () {
 		instanceDot.transform.position = Vector3 (mousePos.x / magicNumber, mousePos.y / magicNumber, 0);
 	
 		player.currentInk -= player.drawCost;
+		player.updateInkBar();
 	
 	}
 }
