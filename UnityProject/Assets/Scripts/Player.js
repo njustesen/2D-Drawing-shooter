@@ -1,5 +1,10 @@
 var score:int = 0;
 var forward:Vector3 = Vector3(0,0,0);
+var maxInk:float;
+var currentInk:float;
+var inkPerSecond:float;
+var shootCost:float;
+var drawCost:float;
 
 function Update(){
 
@@ -8,6 +13,13 @@ function Update(){
 	gameObject.transform.eulerAngles.x = forward.x;
 	gameObject.transform.eulerAngles.y = forward.y;
 	gameObject.transform.eulerAngles.z = forward.z;
+	
+	// Update ink
+	currentInk += Time.deltaTime * inkPerSecond;
+	
+	if (currentInk >= maxInk){
+		currentInk = maxInk;
+	}
 
 }
 

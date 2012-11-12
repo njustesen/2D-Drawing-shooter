@@ -9,8 +9,14 @@ function Start () {
 
 function Update () {
 
-	if (Input.GetButtonDown (control)){
+	var player:Player = gameObject.GetComponent("Player");
+
+	if (Input.GetButtonDown(control) && player.currentInk >= player.shootCost){
+	
 		Shoot();
+	
+		player.currentInk -= player.shootCost;
+	
 	}
 	
 }
