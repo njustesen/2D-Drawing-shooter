@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Dot.js" />
      <Compile Include="Assets\Scripts\Drawer.js" />
      <Compile Include="Assets\Scripts\InputController.js" />
+     <Compile Include="Assets\Scripts\InvisibilityPU.js" />
      <Compile Include="Assets\Scripts\NukePowerUp.js" />
      <Compile Include="Assets\Scripts\Player.js" />
      <Compile Include="Assets\Scripts\PowerUpSpawner.js" />

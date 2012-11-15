@@ -8,6 +8,8 @@ var currentInk:float;
 var inkPerSecond:float;
 var shootCost:float;
 var drawCost:float;
+private var timeSinceInvisibility:int = 0;
+private var invisibilityTime:int;
 
 function Update(){
 
@@ -27,6 +29,14 @@ function Update(){
 	updateInkBar();
 	updateScoreBar();
 	
+	// Check for invisibility
+	if (!transform.Find("Bip001").transform.Find("Bip001 Pelvis").gameObject.renderer.enabled 
+		&& Time.time > timeSinceInvisibility + invisibilityTime){
+		
+		visible();
+		
+	}
+	
 }
 
 function powerUp(){
@@ -39,6 +49,19 @@ function powerUp(){
 	// Increases jump
 	motor.jumping.baseHeight += 2.0;
 	
+}
+
+function invisible(time){
+	transform.Find("Bip001").transform.Find("Bip001 Pelvis").gameObject.renderer.enabled = false; 
+	timeSinceInvisibility = Time.time;
+	invisibilityTime = time;
+
+}
+
+function visible(){
+
+	transform.Find("Bip001").transform.Find("Bip001 Pelvis").gameObject.renderer.enabled = true; 
+
 }
 
 function updateInkBar(){

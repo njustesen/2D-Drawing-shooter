@@ -1,5 +1,5 @@
 var smooth = 2.0;
-var speed = 5;
+var angle = 5;
 
 function Start () {
   
@@ -8,8 +8,9 @@ function Start () {
 
 function Update () {
 
-	var tiltAroundX = speed;
-    var target = Quaternion.Euler (tiltAroundX, 0, 0);
+	angle += 2;
+	var tiltAroundY = angle;
+    var target = Quaternion.Euler (0, tiltAroundY, 0);
     // Dampen towards the target rotation
     transform.rotation = Quaternion.Slerp(transform.rotation, target,
                                    Time.deltaTime * smooth);
