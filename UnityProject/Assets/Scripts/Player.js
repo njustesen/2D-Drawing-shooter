@@ -73,5 +73,5 @@ function updateInkBar(){
 function updateScoreBar(){
 	
 	scoreBar.text = "" + score;
-	
+
 }

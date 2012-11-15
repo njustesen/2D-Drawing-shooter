@@ -10,7 +10,9 @@ function OnTriggerEnter (other:Collider) {
 
 	if (other.gameObject.CompareTag("Playa")){
 		
-		var player:Player = other.gameObject.GetComponent("Player");
+		var player:GameObject = other.gameObject;
+		
+		//player.rigidbody.AddForce(gameObject.);
 		
 		Destroy (gameObject);
 		
