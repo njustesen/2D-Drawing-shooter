@@ -13,6 +13,7 @@ function Update () {
 	if(Input.GetButton(control) && player.currentInk >= player.drawCost){
 	
 		var instanceDot = Instantiate(prefabDot, transform.position, Quaternion.identity);
+		//instanceDot.transform.tag = "dot";
 
 		var mousePos = Input.mousePosition;
 		mousePos.x -= Screen.width/2;
