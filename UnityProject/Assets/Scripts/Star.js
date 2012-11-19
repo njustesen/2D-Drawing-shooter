@@ -1,4 +1,5 @@
 var value:int = 1;
+var gameArea:Transform;
 
 function Start () {
 	
@@ -19,7 +20,10 @@ function OnTriggerEnter (other:Collider) {
 		var x = Random.Range(-10, 10);
 		var y = Random.Range(-7, 7);
 
-		gameObject.transform.position = Vector3 (x, y, 0);
+		gameObject.transform.position = Vector3 (x + gameArea.transform.position.x, y + gameArea.transform.position.y, 0);
+		
+	} else if (other.gameObject.CompareTag("WaterCollider")){
+	
 		
 	}
 }

@@ -24,7 +24,7 @@ function Update () {
 		
 	var player:Player = gameObject.GetComponent("Player");
 	
-	if(Input.GetButton(control) && player.currentInk >= player.drawCost){
+	if(Input.GetButton(control) && player.currentInk >= player.drawCost && !player.dead){
 	
 		spawnDot(player, new Vector3(mouseX, mouseY, 0), lastCursorPos);
 		
@@ -36,46 +36,60 @@ function Update () {
 
 function spawnDot(player, before, after){
 
-	// Paint before
-	var beforeDot = Instantiate(prefabDot, transform.position, Quaternion.identity);
-	//beforeDot.transform.parent = parent.transform;
-	//beforeDot.transform.localPosition = new Vector3 (before.x / magicNumber, before.y / magicNumber, 0);
-	beforeDot.transform.position = new Vector3 ((before.x), (before.y), 0);
-	
-	// Paint after
-	var afterDot = Instantiate(prefabDot, transform.position, Quaternion.identity);
-	//afterDot.transform.parent = parent.transform;
-	//afterDot.transform.localPosition = new Vector3 (after.x / magicNumber, after.y / magicNumber, 0);
-	afterDot.transform.position = new Vector3 ((after.x), (after.y), 0);
-	
-	spawnDotBetween(player, before, after);
+	distance = getDistance(after, before);
 
-	player.currentInk -= player.drawCost;
-	player.updateInkBar();
-
+	if (player.currentInk >= player.drawCost * distance){
+		// Paint before
+		var beforeDot = Instantiate(prefabDot, transform.position, Quaternion.identity);
+		//beforeDot.transform.parent = parent.transform;
+		//beforeDot.transform.localPosition = new Vector3 (before.x / magicNumber, before.y / magicNumber, 0);
+		beforeDot.transform.position = new Vector3 ((before.x), (before.y), 0);
+		
+		// Paint after
+		var afterDot = Instantiate(prefabDot, transform.position, Quaternion.identity);
+		//afterDot.transform.parent = parent.transform;
+		//afterDot.transform.localPosition = new Vector3 (after.x / magicNumber, after.y / magicNumber, 0);
+		afterDot.transform.position = new Vector3 ((after.x), (after.y), 0);
+		
+		spawnDotBetween(player, before, after);
+		
+		player.currentInk -= player.drawCost * getDistance(after, before);
+		player.updateInkBar();
+	
+	}
 }
 
 function spawnDotBetween(player, before, after){
 
-	var middle = new Vector3((before.x + after.x) / 2, (before.y + after.y) / 2, 0);
+	distance = getDistance(after, before);	
 
-	var distance:float = 	(before.x - after.x) * (before.x - after.x) +
-							(before.y - after.y) * (before.y - after.y);
-	distance = Mathf.Sqrt(distance);
+	if (player.currentInk >= player.drawCost() * distance){
+
+		var middle = new Vector3((before.x + after.x) / 2, (before.y + after.y) / 2, 0);
+		
+		if (distance > dotDistance){		
+			
+			spawnDotBetween(player, before, middle);
+			spawnDotBetween(player, after, middle);
 	
-	if (distance > dotDistance){		
-		
-		spawnDotBetween(player, before, middle);
-		spawnDotBetween(player, after, middle);
-
-		// Paint middle
-		var middleDot = Instantiate(prefabDot, transform.position, Quaternion.identity);
-		//middleDot.transform.parent = parent.transform;
-		//middleDot.transform.localPosition = new Vector3 (middle.x / magicNumber, middle.y / magicNumber, 0);
-		middleDot.transform.position = new Vector3 ((middle.x), (middle.y), 0);
-		
-		player.currentInk -= player.drawCost;
+			// Paint middle
+			var middleDot = Instantiate(prefabDot, transform.position, Quaternion.identity);
+			//middleDot.transform.parent = parent.transform;
+			//middleDot.transform.localPosition = new Vector3 (middle.x / magicNumber, middle.y / magicNumber, 0);
+			middleDot.transform.position = new Vector3 ((middle.x), (middle.y), 0);
+			
+			player.currentInk -= player.drawCost * distance;
+			
+		}
 		
 	}
 
+}
+
+function getDistance(a:Vector3, b:Vector3){
+
+	var distance:float = 	(a.x - b.x) * (a.x - b.x) +
+							(a.y - b.y) * (a.y - b.y);
+							
+	return Mathf.Sqrt(distance);
 }

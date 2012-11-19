@@ -13,8 +13,6 @@ function Start(){
 
 function Update(){
 
-	Debug.Log(speed);
-
 	if (Time.time > started + timeBeforeRaise){
 		gameObject.transform.position.y += speed;
 		if (speed < maxSpeed){

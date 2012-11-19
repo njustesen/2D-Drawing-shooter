@@ -1,5 +1,6 @@
 var prefabBullet:Transform;
 var shootForce:float;
+var cursor:Transform;
 var control:String;
 var magicNumber:int;
 
@@ -11,7 +12,7 @@ function Update () {
 
 	var player:Player = gameObject.GetComponent("Player");
 
-	if (Input.GetButtonDown(control) && player.currentInk >= player.shootCost){
+	if (Input.GetButtonDown(control) && player.currentInk >= player.shootCost && !player.dead){
 	
 		Shoot();
 	
@@ -29,7 +30,7 @@ function Shoot () {
 	mousePos.x -= Screen.width/2;
 	mousePos.y -= Screen.height/2;
 
-	var mousePosition = Vector3 (mousePos.x / magicNumber, mousePos.y / magicNumber, 0);
+	var mousePosition = Vector3 (cursor.transform.position.x, cursor.transform.position.y, 0);
 
 	var direction:Vector3 = mousePosition - transform.position;
 

@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Shooter.js" />
      <Compile Include="Assets\Scripts\Star.js" />
      <Compile Include="Assets\Scripts\StarSpawner.js" />
+     <Compile Include="Assets\Scripts\WaterCollider.js" />
      <Compile Include="Assets\Scripts\powerUp.js" />
  <Reference Include="Library\ScriptAssemblies\Assembly-UnityScript-firstpass">
  <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>

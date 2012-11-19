@@ -1,3 +1,4 @@
+var gameArea:Transform;
 var score:int = 0;
 var forward:Vector3 = Vector3(0,0,0);
 var scoreBar:GUIText;
@@ -8,8 +9,11 @@ var currentInk:float;
 var inkPerSecond:float;
 var shootCost:float;
 var drawCost:float;
+var respawnTime:float;
+var respawnLocation:Vector3;
 private var timeSinceInvisibility:int = 0;
 private var invisibilityTime:int;
+public var dead:boolean;
 
 function Update(){
 
@@ -74,4 +78,20 @@ function updateScoreBar(){
 	
 	scoreBar.text = "" + score;
 
+}
+
+function die(){
+	score--;
+	dead = true;
+	transform.position = Vector3(-1000,10,0);
+	yield WaitForSeconds(respawnTime);
+	respawn();
+
+}
+
+function respawn(){
+	dead = false;
+	//if (score < 0){
+		transform.position = respawnLocation + gameArea.position;
+	//}
 }
