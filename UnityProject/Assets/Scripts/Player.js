@@ -67,7 +67,7 @@ function visible(){
 function updateInkBar(){
 
 	inkBar.transform.localScale.y = inkBarMaxWidth / ( maxInk / currentInk );
-
+	
 }
 
 function updateScoreBar(){
