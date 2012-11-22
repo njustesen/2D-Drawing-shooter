@@ -28,9 +28,9 @@ function spawnNuke(){
 	var powerUp = Instantiate(nuke, transform.position, Quaternion.identity);
 		
 	var x = Random.Range(-10, 10);
-	var y = Random.Range(-7, 7);
+	var y = Random.Range(-10, 10);
 
-	powerUp.transform.position = Vector3 (x, y, 0);
+	powerUp.transform.position = Vector3 (x + gameObject.transform.position.x, y + gameObject.transform.position.y, 0);
 
 }
 
@@ -39,8 +39,8 @@ function spawnInvisibility(){
 	var powerUp = Instantiate(invisibility, transform.position, Quaternion.identity);
 		
 	var x = Random.Range(-10, 10);
-	var y = Random.Range(-7, 7);
+	var y = Random.Range(-10, 10);
 
-	powerUp.transform.position = Vector3 (x, y, 0);
+	powerUp.transform.position = Vector3 (x + gameObject.transform.position.x, y + gameObject.transform.position.y, 0);
 
 }

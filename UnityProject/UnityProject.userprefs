@@ -1,18 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/WaterCollider.js">
-    <Files>
-      <File FileName="Assets/Scripts/Drawer.js" Line="27" Column="69" />
-      <File FileName="Assets/Scripts/Shooter.js" Line="8" Column="2" />
-      <File FileName="Assets/Scripts/Player.js" Line="86" Column="43" />
-      <File FileName="Assets/Scripts/Raising.js" Line="16" Column="1" />
-      <File FileName="Assets/Scripts/Dot.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Star.js" Line="27" Column="3" />
-      <File FileName="Assets/Scripts/StarSpawner.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Bullet.js" Line="35" Column="54" />
-      <File FileName="Assets/Scripts/WaterCollider.js" Line="36" Column="7" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

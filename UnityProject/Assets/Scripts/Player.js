@@ -81,7 +81,7 @@ function updateScoreBar(){
 }
 
 function die(){
-	score--;
+	//score--;
 	dead = true;
 	transform.position = Vector3(-1000,10,0);
 	yield WaitForSeconds(respawnTime);

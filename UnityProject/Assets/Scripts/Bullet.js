@@ -36,6 +36,10 @@ function OnTriggerEnter (other:Collider) {
 	
 		dot.hit();
 	
+	} else if (other.gameObject.CompareTag("KillCollider")){
+	
+		Destroy (gameObject);
+	
 	}
 	
 	

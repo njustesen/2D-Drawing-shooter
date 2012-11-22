@@ -31,5 +31,9 @@ function OnTriggerEnter (other:Collider) {
 		
 		Destroy(gameObject);
 		
+	} else if (other.gameObject.CompareTag("KillCollider")){
+	
+		Destroy(gameObject);
+		
 	}
 }

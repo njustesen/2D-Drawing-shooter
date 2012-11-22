@@ -1,13 +1,13 @@
 #pragma strict
 var gameArea:Transform;
 var prefabStar:Transform;
+private var startingPos:Vector3;
 
 function Start () {
 
 }
 
 function update (){
-	
 	
 	
 }
@@ -17,8 +17,6 @@ function OnTriggerEnter (other:Collider) {
 	if (other.gameObject.CompareTag("Playa")){
 		
 		var player:Player = other.gameObject.GetComponent("Player");
-		
-		//Destroy (other.gameObject);
 		
 		player.die();
 		
@@ -32,8 +30,8 @@ function OnTriggerEnter (other:Collider) {
 	
 	} else if (other.gameObject.CompareTag("Star")){
 	
-		var x = Random.Range(-10, 10);
-		var y = Random.Range(-7, 7);
+		var x = Random.Range(-8, 8);
+		var y = Random.Range(-8, 8);
 		
 		Debug.Log("Water-Star-Collision");
 

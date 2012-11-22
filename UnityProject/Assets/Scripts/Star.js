@@ -17,13 +17,17 @@ function OnTriggerEnter (other:Collider) {
 		
 		player.score += value;
 		
-		var x = Random.Range(-10, 10);
-		var y = Random.Range(-7, 7);
+		var x = Random.Range(-8, 8);
+		var y = Random.Range(-8, 8);
 
 		gameObject.transform.position = Vector3 (x + gameArea.transform.position.x, y + gameArea.transform.position.y, 0);
 		
-	} else if (other.gameObject.CompareTag("WaterCollider")){
+	} else if (other.gameObject.CompareTag("KillCollider")){
 	
+		x = Random.Range(-8, 8);
+		y = Random.Range(-8, 8);
+
+		gameObject.transform.position = Vector3 (x + gameArea.transform.position.x, y + gameArea.transform.position.y, 0);
 		
 	}
 }
