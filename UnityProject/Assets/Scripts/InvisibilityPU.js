@@ -23,7 +23,7 @@ function OnTriggerEnter (other:Collider) {
 	if (other.gameObject.CompareTag("Playa")){
 		
 		var player:Player = other.gameObject.GetComponent("Player");
-		player.invisible(invisibilityTime);
+		player.invisiblePU(invisibilityTime);
 		
 		Destroy(gameObject);
 		

@@ -11,9 +11,13 @@ var shootCost:float;
 var drawCost:float;
 var respawnTime:float;
 var respawnLocation:Vector3;
+public var otherPlayerA:Transform;
+public var otherPlayerB:Transform;
+public var otherPlayerC:Transform;
 private var timeSinceInvisibility:int = 0;
 private var invisibilityTime:int;
 public var dead:boolean;
+public var playerNumber:int;
 
 function Update(){
 
@@ -34,7 +38,7 @@ function Update(){
 	updateScoreBar();
 	
 	// Check for invisibility
-	if (!transform.Find("Bip001").transform.Find("Bip001 Pelvis").gameObject.renderer.enabled 
+	if (!transform.Find("Bip001").transform.Find("worker_" + playerNumber).gameObject.renderer.enabled 
 		&& Time.time > timeSinceInvisibility + invisibilityTime){
 		
 		visible();
@@ -56,15 +60,33 @@ function powerUp(){
 }
 
 function invisible(time){
-	transform.Find("Bip001").transform.Find("Bip001 Pelvis").gameObject.renderer.enabled = false; 
+	transform.Find("Bip001").transform.Find("worker_" + playerNumber).gameObject.renderer.enabled = false; 
 	timeSinceInvisibility = Time.time;
 	invisibilityTime = time;
 
 }
 
+function invisiblePU(time){
+	var playerA:Player = otherPlayerA.gameObject.GetComponent("Player");
+	var playerB:Player = otherPlayerB.gameObject.GetComponent("Player");
+	var playerC:Player = otherPlayerC.gameObject.GetComponent("Player");
+	
+	playerA.invisible(time);
+	playerB.invisible(time);
+	playerC.invisible(time);
+}
+
 function visible(){
 
-	transform.Find("Bip001").transform.Find("Bip001 Pelvis").gameObject.renderer.enabled = true; 
+	transform.Find("Bip001").transform.Find("worker_" + playerNumber).gameObject.renderer.enabled = true; 
+
+}
+
+function teleportPU(){
+
+	var drawer:Drawer = gameObject.GetComponent("Drawer");
+
+	drawer.enableTeleport();
 
 }
 
@@ -83,14 +105,17 @@ function updateScoreBar(){
 function die(){
 	//score--;
 	dead = true;
+	//inkBar.renderer.enable = false;
 	transform.position = Vector3(-1000,10,0);
 	yield WaitForSeconds(respawnTime);
+	visible();
 	respawn();
 
 }
 
 function respawn(){
 	dead = false;
+	//inkBar.renderer.enable = true;
 	//if (score < 0){
 		transform.position = respawnLocation + gameArea.position;
 	//}

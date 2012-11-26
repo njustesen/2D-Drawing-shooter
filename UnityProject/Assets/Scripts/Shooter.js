@@ -3,16 +3,17 @@ var shootForce:float;
 var cursor:Transform;
 var control:String;
 var magicNumber:int;
+public var playerNumber:int;
 
 function Start () {
 	
 }
 
 function Update () {
-
+    var serverScript = GameObject.Find("GameArea").GetComponent("Server");
 	var player:Player = gameObject.GetComponent("Player");
 
-	if (Input.GetButtonDown(control) && player.currentInk >= player.shootCost && !player.dead){
+	if (serverScript.getShoot(playerNumber) && player.currentInk >= player.shootCost && !player.dead){
 	
 		Shoot();
 	
@@ -26,17 +27,13 @@ function Update () {
 
 function Shoot () {
 
-	var mousePos = Input.mousePosition;
-	mousePos.x -= Screen.width/2;
-	mousePos.y -= Screen.height/2;
-
 	var mousePosition = Vector3 (cursor.transform.position.x, cursor.transform.position.y, 0);
 
 	var direction:Vector3 = mousePosition - transform.position;
 
 	direction = direction.normalized;
 	
-	var bullet:Transform = Instantiate(prefabBullet, transform.position + (direction * 1), Quaternion.identity);
+	var bullet:Transform = Instantiate(prefabBullet, transform.position + (direction * 1.2), Quaternion.identity);
 	
 	bullet.rotation = Quaternion.LookRotation(direction);;
 	

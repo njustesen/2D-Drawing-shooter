@@ -1,17 +1,29 @@
-var prefabStar:Transform;
+var smooth = 2.0;
+var angle = 5;
+var invisibilityTime = 10;
 
 function Start () {
-	SpawnStar();
+  
+
 }
 
-function SpawnStar () {
-	
-	var star = Instantiate(prefabStar, transform.position, Quaternion.identity);
+function Update () {
+
+	angle += 2;
+	var tiltAroundY = angle;
+    var target = Quaternion.Euler (0, tiltAroundY, 0);
+    // Dampen towards the target rotation
+    transform.rotation = Quaternion.Slerp(transform.rotation, target,
+                                   Time.deltaTime * smooth);
+
+}
+
+function OnTriggerEnter (other:Collider) {
+
+	if (other.gameObject.CompareTag("Playa")){
 		
-	var x = Random.Range(-10, 10);
-	var y = Random.Range(-7, 7);
-
-	star.transform.position = Vector3 (x, y, 0);
-	
+		var player:Player = other.gameObject.GetComponent("Player");
+		player.teleportPU();
+		
+	}
 }
-

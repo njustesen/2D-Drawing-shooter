@@ -29,14 +29,7 @@ function OnTriggerEnter (other:Collider) {
 		Destroy (other.gameObject);
 	
 	} else if (other.gameObject.CompareTag("Star")){
-	
-		var x = Random.Range(-8, 8);
-		var y = Random.Range(-8, 8);
-		
-		Debug.Log("Water-Star-Collision");
 
-		other.gameObject.transform.position = Vector3 (x + gameArea.transform.position.x, y + gameArea.transform.position.y, 0);
-		
 	}
 
 }

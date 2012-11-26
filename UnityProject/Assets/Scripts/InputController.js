@@ -1,7 +1,7 @@
 var jump:String;
 var horizontal:String;
 var vertical:String;
-
+public var playerNumber:int;
 private var motor : CharacterMotor;
 
 // Use this for initialization
@@ -12,7 +12,9 @@ function Awake () {
 // Update is called once per frame
 function Update () {
 	// Get the input vector from kayboard or analog stick
-	var directionVector = new Vector3(Input.GetAxis(vertical), 0, Input.GetAxis(horizontal));
+	var serverScript = GameObject.Find("GameArea").GetComponent("Server");
+	//var directionVector = new Vector3(Input.GetAxis(vertical), 0, Input.GetAxis(horizontal));
+	var directionVector = new Vector3(Input.GetAxis(vertical), 0, serverScript.getXSpeed(playerNumber));
 	
 	if (directionVector != Vector3.zero) {
 		// Get the length of the directon vector and then normalize it
@@ -33,7 +35,9 @@ function Update () {
 	
 	// Apply the direction to the CharacterMotor
 	motor.inputMoveDirection = transform.rotation * directionVector;
-	motor.inputJump = Input.GetButton(jump);
+	//motor.inputJump = Input.GetButton(jump);
+	motor.inputJump = serverScript.getJump(playerNumber);
+
 }
 
 // Require a character controller to be attached to the same game object

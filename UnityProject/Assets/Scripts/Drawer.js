@@ -4,27 +4,37 @@ var cursor:Transform;
 var control:String;
 var magicNumber:int;
 var dotDistance:float = 0.01;
+public var playerNumber:int;
 private var lastCursorPos:Vector3;
+private var teleportEnabled:boolean = false;
 
 function Start () {
 	
 }
 
 function Update () {
-
+	var serverScript = GameObject.Find("GameArea").GetComponent("Server");
 	// Record mouse position
 	var mousePos = Input.mousePosition;
 		mousePos.x -= Screen.width/2;
 		mousePos.y -= Screen.height/2;
-		
+	
+	var floatX: float = -serverScript.getAimX(playerNumber);
+	var floatY: float = -serverScript.getAimY(playerNumber);
 	// Move cursor
-	cursor.transform.localPosition = new Vector3 (mousePos.x / magicNumber, mousePos.y / magicNumber, 0);
+	cursor.transform.localPosition = new Vector3 ( (floatX/ magicNumber)+15,  (floatY/ magicNumber)+10, 0);
 	mouseX = cursor.transform.position.x;
 	mouseY = cursor.transform.position.y;
 		
 	var player:Player = gameObject.GetComponent("Player");
 	
-	if(Input.GetButton(control) && player.currentInk >= player.drawCost && !player.dead){
+	if (teleportEnabled){
+	
+		player.transform.position = new Vector3(mouseX, mouseY, 0);
+		
+		disableTeleport();
+	
+	} else if(serverScript.getDraw(playerNumber) && player.currentInk >= player.drawCost && !player.dead){
 	
 		spawnDot(player, new Vector3(mouseX, mouseY, 0), lastCursorPos);
 		
@@ -32,6 +42,18 @@ function Update () {
 	
 	lastCursorPos = cursor.transform.position;
 	
+}
+
+function enableTeleport(){
+
+	teleportEnabled = true;
+
+}
+
+function disableTeleport(){
+
+	teleportEnabled = false;
+
 }
 
 function spawnDot(player, before, after){
@@ -54,6 +76,11 @@ function spawnDot(player, before, after){
 		spawnDotBetween(player, before, after);
 		
 		player.currentInk -= player.drawCost * getDistance(after, before);
+		
+		if(player.currentInk < 0){
+			player.currentInk = 0;
+		}
+		
 		player.updateInkBar();
 	
 	}
@@ -79,6 +106,10 @@ function spawnDotBetween(player, before, after){
 			middleDot.transform.position = new Vector3 ((middle.x), (middle.y), 0);
 			
 			player.currentInk -= player.drawCost * distance;
+			
+			if(player.currentInk < 0){
+				player.currentInk = 0;
+			}
 			
 		}
 		

@@ -6,12 +6,16 @@ public var minHeight:float;
 public var maxHeight:float;
 public var minWidth:float;
 public var maxWidth:float;
+public var gameOver:GUIText;
+public var blackPlane:Transform;
 private var started:int;
-private var movingDirection:Vector3 = Vector3(0,1,0);
+private var movingDirection:Vector3 = Vector3(1,0,0);
 
 function Start(){
 
 	started = Time.time;
+	blackPlane.renderer.enabled = false;
+	gameOver.text = " ";
 	
 }
 
@@ -30,11 +34,7 @@ function Update(){
 	}
 	
 	// Change direction?
-	if (movingDirection == Vector3(0,1,0) && gameObject.transform.position.y >= maxHeight){
-		movingDirection = Vector3(1,0,0);
-		speed = 0;
-		started = Time.time;
-	} else if (movingDirection == Vector3(1,0,0) && gameObject.transform.position.x >= maxWidth){
+	if (movingDirection == Vector3(1,0,0) && gameObject.transform.position.x >= maxWidth){
 		movingDirection = Vector3(0,-1,0);
 		speed = 0;
 		started = Time.time;
@@ -43,9 +43,21 @@ function Update(){
 		speed = 0;
 		started = Time.time;
 	}else if (movingDirection == Vector3(-1,0,0) && gameObject.transform.position.x <= minWidth){
+		movingDirection = Vector3(0,1,0);
 		speed = 0;
 		started = Time.time;
-		// END GAME!
+	}else if (movingDirection == Vector3(0,1,0) && gameObject.transform.position.y >= maxHeight){
+		speed = 0;
+		
+		blackPlane.renderer.enabled = true;
+		gameOver.text = "GAME OVER";
 	}
 	
+}
+
+function restartGame(){
+
+	blackPlane.renderer.enabled = false;
+	gameOver.text = "";
+
 }
