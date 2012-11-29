@@ -11,6 +11,8 @@ function Update () {
 
 function OnTriggerEnter (other:Collider) {
 
+	Debug.Log("collision");
+
 	if (other.gameObject.CompareTag("Playa")){
 		
 		var player:Player = other.gameObject.GetComponent("Player");

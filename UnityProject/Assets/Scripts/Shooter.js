@@ -4,6 +4,7 @@ var cursor:Transform;
 var control:String;
 var magicNumber:int;
 public var playerNumber:int;
+private var erasingEnabled:boolean = false;
 
 function Start () {
 	
@@ -13,16 +14,44 @@ function Update () {
     var serverScript = GameObject.Find("GameArea").GetComponent("Server");
 	var player:Player = gameObject.GetComponent("Player");
 
-	if (serverScript.getShoot(playerNumber) && player.currentInk >= player.shootCost && !player.dead){
+	if (serverScript.getShoot(playerNumber) && !player.dead){
 	
-		Shoot();
-	
-		player.currentInk -= player.shootCost;
+		if (erasingEnabled){
 		
-		player.updateInkBar();
+			Erase();
+		
+		} else if (player.currentInk >= player.shootCost){
+		
+			Shoot();
 	
+			player.currentInk -= player.shootCost;
+			
+			player.updateInkBar();
+		
+		}
+			
 	}
 	
+}
+
+function enableErasing(){
+
+	erasingEnabled = true;
+
+}
+
+function disableErasing(){
+
+	erasingEnabled = false;
+
+}
+
+function Erase(){
+
+	var cursorObj:Cursor = cursor.gameObject.GetComponent("Cursor");
+
+	cursorObj.erase();
+
 }
 
 function Shoot () {

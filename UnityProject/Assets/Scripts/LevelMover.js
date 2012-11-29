@@ -46,9 +46,12 @@ function Update(){
 		movingDirection = Vector3(0,1,0);
 		speed = 0;
 		started = Time.time;
-	}else if (movingDirection == Vector3(0,1,0) && gameObject.transform.position.y >= maxHeight){
+	} else if (movingDirection == Vector3(0,1,0) && gameObject.transform.position.y >= maxHeight){
+		movingDirection = Vector3(0,0,0);
 		speed = 0;
-		
+		started = Time.time;
+	} else if (movingDirection == Vector3(0,0,0) && Time.time > started + timeBeforeRaise){
+		speed = 0;
 		blackPlane.renderer.enabled = true;
 		gameOver.text = "GAME OVER";
 	}

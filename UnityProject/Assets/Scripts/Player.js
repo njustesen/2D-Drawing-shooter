@@ -86,7 +86,15 @@ function teleportPU(){
 
 	var drawer:Drawer = gameObject.GetComponent("Drawer");
 
-	drawer.enableTeleport();
+	drawer.enableErasing();
+
+}
+
+function erasePU(){
+
+	var shooter:Shooter = gameObject.GetComponent("Shooter");
+	
+	shooter.enableTeleport();
 
 }
 

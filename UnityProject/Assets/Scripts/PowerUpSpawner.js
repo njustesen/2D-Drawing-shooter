@@ -1,6 +1,7 @@
 var nuke:Transform;
 var invisibility:Transform;
 var teleport:Transform;
+var eraser:Transform;
 var spawnTime:float;
 
 function Start () {
@@ -11,7 +12,7 @@ function Update () {
 	
 	if(Random.Range(0.0, 100.0) < spawnTime){
 		
-		var ran = Random.Range(0.0,3.0);
+		var ran = Random.Range(0.0,4.0);
 		
 		if (ran < 1.0){
 			spawnNuke();
@@ -19,12 +20,24 @@ function Update () {
 			spawnInvisibility();
 		} else if (ran < 3.0){
 			spawnTeleport();
+		} else if (ran < 4.0){
+			spawnEraser();
 		}
 		
 	}
 	
 }
 
+function spawnEraser(){
+
+	var powerUp = Instantiate(eraser, transform.position, Quaternion.identity);
+		
+	var x = Random.Range(-10, 10);
+	var y = Random.Range(-10, 10);
+
+	powerUp.transform.position = Vector3 (x + gameObject.transform.position.x, y + gameObject.transform.position.y, 0);
+
+}
 
 function spawnNuke(){
 
