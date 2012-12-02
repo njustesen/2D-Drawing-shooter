@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Shooter.js">
+    <Files>
+      <File FileName="Assets\Scripts\Drawer.js" Line="9" Column="1" />
+      <File FileName="Assets\Scripts\Shooter.js" Line="6" Column="29" />
+      <File FileName="Assets\Scripts\Player.js" Line="87" Column="53" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

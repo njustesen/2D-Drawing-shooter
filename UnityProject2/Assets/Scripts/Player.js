@@ -11,6 +11,7 @@ var shootCost:float;
 var drawCost:float;
 var respawnTime:float;
 var respawnLocation:Vector3;
+public var animationObj : Transform;
 public var otherPlayerA:Transform;
 public var otherPlayerB:Transform;
 public var otherPlayerC:Transform;
@@ -38,29 +39,19 @@ function Update(){
 	updateScoreBar();
 	
 	// Check for invisibility
-	if (!transform.Find("Bip001").transform.Find("worker_" + playerNumber).gameObject.renderer.enabled 
+	
+	if (!animationObj.renderer.enabled 
 		&& Time.time > timeSinceInvisibility + invisibilityTime){
 		
 		visible();
 		
 	}
 	
-}
-
-function powerUp(){
-	
-	// Increases speed
-	var motor:CharacterMotor = gameObject.GetComponent("CharacterMotor");
-	motor.movement.maxForwardSpeed += 3.0;
-	motor.movement.maxBackwardsSpeed += 3.0;
-	
-	// Increases jump
-	motor.jumping.baseHeight += 2.0;
 	
 }
 
 function invisible(time){
-	transform.Find("Bip001").transform.Find("worker_" + playerNumber).gameObject.renderer.enabled = false; 
+	animationObj.renderer.enabled = false; 
 	timeSinceInvisibility = Time.time;
 	invisibilityTime = time;
 
@@ -78,7 +69,7 @@ function invisiblePU(time){
 
 function visible(){
 
-	transform.Find("Bip001").transform.Find("worker_" + playerNumber).gameObject.renderer.enabled = true; 
+	animationObj.renderer.enabled = true; 
 
 }
 
