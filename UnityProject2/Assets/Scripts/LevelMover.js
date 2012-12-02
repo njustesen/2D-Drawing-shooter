@@ -52,8 +52,12 @@ function Update(){
 		started = Time.time;
 	} else if (movingDirection == Vector3(0,0,0) && Time.time > started + timeBeforeRaise){
 		speed = 0;
+		started = Time.time;
+		movingDirection = Vector3(10,10,10);
 		blackPlane.renderer.enabled = true;
 		gameOver.text = "GAME OVER";
+	} else if (movingDirection == Vector3(10,10,10) && Time.time > started + timeBeforeRaise){
+		Application.LoadLevel ("start_menu");
 	}
 	
 }

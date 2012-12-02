@@ -62,6 +62,14 @@
      <Compile Include="Assets\Scripts\StarSpawner.js" />
      <Compile Include="Assets\Scripts\TeleportPU.js" />
      <Compile Include="Assets\Scripts\powerUp.js" />
+     <Compile Include="Assets\menu_scripts\controls_enter.js" />
+     <Compile Include="Assets\menu_scripts\game_modes_enter.js" />
+     <Compile Include="Assets\menu_scripts\load_level_deathmatch.js" />
+     <Compile Include="Assets\menu_scripts\load_level_get_the_star.js" />
+     <Compile Include="Assets\menu_scripts\load_level_waterworld.js" />
+     <Compile Include="Assets\menu_scripts\main_menu_enter.js" />
+     <Compile Include="Assets\menu_scripts\play_again_enter1.js" />
+     <Compile Include="Assets\menu_scripts\text_color_change.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
