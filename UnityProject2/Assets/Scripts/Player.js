@@ -2,6 +2,7 @@ var gameArea:Transform;
 var score:int = 0;
 var forward:Vector3 = Vector3(0,0,0);
 var scoreBar:GUIText;
+var deadText:GUIText;
 var inkBar:Transform;
 var inkBarMaxWidth:float;
 var maxInk:float;
@@ -19,6 +20,16 @@ private var timeSinceInvisibility:int = 0;
 private var invisibilityTime:int;
 public var dead:boolean;
 public var playerNumber:int;
+private var gameEnded:boolean;
+var color:Color;
+
+function Start(){
+	
+	gameEnded = false;
+	deadText.material.color = color;
+	deadText.text = "";
+
+}
 
 function Update(){
 
@@ -104,18 +115,34 @@ function updateScoreBar(){
 function die(){
 	//score--;
 	dead = true;
+	deadText.text = "DEAD";
 	//inkBar.renderer.enable = false;
 	transform.position = Vector3(-1000,10,0);
 	yield WaitForSeconds(respawnTime);
-	visible();
-	respawn();
-
+	if (!gameEnded){
+		visible();
+		respawn();
+	}
 }
 
 function respawn(){
 	dead = false;
-	//inkBar.renderer.enable = true;
-	//if (score < 0){
-		transform.position = respawnLocation + gameArea.position;
-	//}
+	deadText.text = "";
+	transform.position = respawnLocation + gameArea.position;
+}
+
+function endGame(){
+
+	gameEnded = true;
+	die();
+
+}
+
+function removeFromGame(){
+
+	endGame();
+	inkBar.renderer.enabled = false;
+	scoreBar.text = " ";
+	deadText.text = " ";
+
 }
