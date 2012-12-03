@@ -5,14 +5,13 @@ public var playerNumber:int;
 public var animationObj : Transform;
 public var animationSpeed : float;
 public var standing : Material;
-public var standingMaterial : Material;
+public var color:Color;
 public var rightAnimation : Material[] = new Material[18];
 public var leftAnimation : Material[] = new Material[18];
 private var motor : CharacterMotor;
 private var animationTimer : float;
 private var lastDirection : float;
 private var animNum : int;
-
 
 // Use this for initialization
 function Awake () {
@@ -24,6 +23,7 @@ function Awake () {
 
 // Update is called once per frame
 function Update () {
+
 	// Get the input vector from kayboard or analog stick
 	var serverScript = GameObject.Find("GameArea").GetComponent("Server");
 	//var directionVector = new Vector3(Input.GetAxis(vertical), 0, Input.GetAxis(horizontal));
@@ -33,7 +33,6 @@ function Update () {
 	if (directionVector != Vector3.zero) {
 	
 		// Animation/*
-		Debug.Log(directionVector.z);
 		if (directionVector.z > 0){
 			
 			if (lastDirection <= 0){
@@ -99,7 +98,7 @@ function Update () {
 		directionVector = directionVector * directionLength;
 	} else {
 	
-		animationObj.renderer.material = standingMaterial;
+		animationObj.renderer.material = standing;
 	
 	}
 	
@@ -107,6 +106,8 @@ function Update () {
 	motor.inputMoveDirection = transform.rotation * directionVector;
 	//motor.inputJump = Input.GetButton(jump);
 	motor.inputJump = serverScript.getJump(playerNumber);
+	
+	animationObj.renderer.material.color = color;
 
 }
 
