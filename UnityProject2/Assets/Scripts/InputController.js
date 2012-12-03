@@ -104,8 +104,8 @@ function Update () {
 	
 	// Apply the direction to the CharacterMotor
 	motor.inputMoveDirection = transform.rotation * directionVector;
-	//motor.inputJump = Input.GetButton(jump);
-	motor.inputJump = serverScript.getJump(playerNumber);
+	motor.inputJump = Input.GetButton(jump);
+	//motor.inputJump = serverScript.getJump(playerNumber);
 	
 	animationObj.renderer.material.color = color;
 
