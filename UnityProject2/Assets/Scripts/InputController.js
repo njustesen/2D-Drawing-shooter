@@ -5,20 +5,14 @@ public var playerNumber:int;
 public var animationObj : Transform;
 public var animationSpeed : float;
 public var standing : Material;
-public var leftA : Material;
-public var leftB : Material;
-public var leftC : Material;
-public var leftD : Material;
-public var leftE : Material;
-public var rightA : Material;
-public var rightB : Material;
-public var rightC : Material;
-public var rightD : Material;
-public var rightE : Material;
+public var standingMaterial : Material;
+public var rightAnimation : Material[] = new Material[18];
+public var leftAnimation : Material[] = new Material[18];
 private var motor : CharacterMotor;
 private var animationTimer : float;
 private var lastDirection : float;
 private var animNum : int;
+
 
 // Use this for initialization
 function Awake () {
@@ -33,8 +27,8 @@ function Update () {
 	// Get the input vector from kayboard or analog stick
 	var serverScript = GameObject.Find("GameArea").GetComponent("Server");
 	//var directionVector = new Vector3(Input.GetAxis(vertical), 0, Input.GetAxis(horizontal));
-	var directionVector = new Vector3(Input.GetAxis(vertical), 0, serverScript.getXSpeed(playerNumber));
-	//var directionVector = new Vector3(Input.GetAxis(vertical), 0, Input.GetAxis(horizontal));
+	//var directionVector = new Vector3(Input.GetAxis(vertical), 0, serverScript.getXSpeed(playerNumber));
+	var directionVector = new Vector3(Input.GetAxis(vertical), 0, Input.GetAxis(horizontal));
 	
 	if (directionVector != Vector3.zero) {
 	
@@ -47,106 +41,42 @@ function Update () {
 				lastDirection = 1;
 				
 				// Change direction material
-				animationObj.renderer.material = rightA;
-				animNum = 1;
+				animNum = 0;
+				animationObj.renderer.material = rightAnimation[animNum];
 				animationTimer = Time.time;
-				Debug.Log("rightA");
 			
 			} else if (Time.time - animationTimer >= animationSpeed ){
-			
-				Debug.Log(animationObj.renderer.material.Equals(rightA));
-			
-				// Change material
-				if (animNum == 1){
 					
-					animationObj.renderer.material = rightB;
-					animNum = 2;
-					animationTimer = Time.time;
-					Debug.Log("rightB");
+					animNum++;
+					if (animNum == rightAnimation.Length){
+						animNum = 0;
+					}
 					
-				} else if (animNum == 2){
-				
-					animationObj.renderer.material = rightC;
-					animNum = 3;
+					animationObj.renderer.material = rightAnimation[animNum];
 					animationTimer = Time.time;
-					Debug.Log("rightC");
-				
-				} else if (animNum == 3){
-				
-					animationObj.renderer.material = rightD;
-					animNum = 4;
-					animationTimer = Time.time;
-					Debug.Log("rightD");
-				
-				} else if (animNum == 4){
-				
-					animationObj.renderer.material = rightE;
-					animNum = 5;
-					animationTimer = Time.time;
-					Debug.Log("rightE");
-				
-				} else if (animNum == 5){
-				
-					animationObj.renderer.material = rightA;
-					animNum = 1;
-					animationTimer = Time.time;
-					Debug.Log("rightA");
-				
-				}
 			
 			}
 			
 		} else if (directionVector.z < 0){
 			
 			if (lastDirection >= 0){
-			
+				
 				lastDirection = -1;
-			
+				
 				// Change direction material
-				animationObj.renderer.material = leftA;
-				animNum = -1;
+				animNum = 0;
+				animationObj.renderer.material = leftAnimation[animNum];
 				animationTimer = Time.time;
-				Debug.Log("leftA");
 			
 			} else if (Time.time - animationTimer >= animationSpeed ){
-			
-				// Change material
-				if (animNum == -1){
 					
-					animationObj.renderer.material = leftB;
-					animNum = -2;
-					animationTimer = Time.time;
-					Debug.Log("leftB");
+					animNum++;
+					if (animNum == leftAnimation.Length){
+						animNum = 0;
+					}
 					
-				} else if (animNum == -2){
-				
-					animationObj.renderer.material = leftC;
-					animNum = -3;
+					animationObj.renderer.material = leftAnimation[animNum];
 					animationTimer = Time.time;
-					Debug.Log("leftC");
-				
-				} else if (animNum == -3){
-				
-					animationObj.renderer.material = leftD;
-					animNum = -4;
-					animationTimer = Time.time;
-					Debug.Log("leftD");
-				
-				} else if (animNum == -4){
-				
-					animationObj.renderer.material = leftE;
-					animNum = -5;
-					animationTimer = Time.time;
-					Debug.Log("leftE");
-				
-				} else if (animNum == -5){
-				
-					animationObj.renderer.material = leftA;
-					animNum = -1;
-					animationTimer = Time.time;
-					Debug.Log("leftA");
-				
-				}
 			
 			}
 			
@@ -167,6 +97,10 @@ function Update () {
 		
 		// Multiply the normalized direction vector by the modified length
 		directionVector = directionVector * directionLength;
+	} else {
+	
+		animationObj.renderer.material = standingMaterial;
+	
 	}
 	
 	// Apply the direction to the CharacterMotor
