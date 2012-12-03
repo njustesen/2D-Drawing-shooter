@@ -28,6 +28,7 @@ function Start(){
 	gameEnded = false;
 	deadText.material.color = color;
 	deadText.text = "";
+	removeFromGame();
 
 }
 
@@ -108,8 +109,10 @@ function updateInkBar(){
 
 function updateScoreBar(){
 	
-	scoreBar.text = "" + score;
-
+	if (!gameEnded){
+		scoreBar.text = "" + score;
+	}
+	
 }
 
 function die(){
@@ -144,5 +147,6 @@ function removeFromGame(){
 	inkBar.renderer.enabled = false;
 	scoreBar.text = " ";
 	deadText.text = " ";
+	Destroy(gameObject);
 
 }
