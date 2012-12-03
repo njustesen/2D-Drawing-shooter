@@ -28,7 +28,6 @@ function Start(){
 	gameEnded = false;
 	deadText.material.color = color;
 	deadText.text = "";
-	removeFromGame();
 
 }
 

@@ -68,6 +68,9 @@
      <Compile Include="Assets\menu_scripts\load_level_get_the_star.js" />
      <Compile Include="Assets\menu_scripts\load_level_waterworld.js" />
      <Compile Include="Assets\menu_scripts\main_menu_enter.js" />
+     <Compile Include="Assets\menu_scripts\menu_quit.js" />
+     <Compile Include="Assets\menu_scripts\menu_restart.js" />
+     <Compile Include="Assets\menu_scripts\menu_resume.js" />
      <Compile Include="Assets\menu_scripts\play_again_enter1.js" />
      <Compile Include="Assets\menu_scripts\text_color_change.js" />
   </ItemGroup>
