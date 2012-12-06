@@ -30,14 +30,16 @@ function Update(){
 
 	// Move
 	if (Time.time > started + timeBeforeRaise){
-		gameObject.transform.position += speed * movingDirection;
+		gameObject.transform.position += speed * movingDirection  * Time.deltaTime * 42;
 		
 		// Accelerate
 		if (speed < maxSpeed){
-			speed += acceleration;
+			speed += acceleration * Time.deltaTime * 42;
 		}
 		
 	}
+	
+	Debug.Log(""+Time.time);
 	
 	// Change direction?
 	if (movingDirection == Vector3(1,0,0) && gameObject.transform.position.x >= maxWidth){

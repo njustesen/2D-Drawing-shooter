@@ -21,12 +21,18 @@ private var invisibilityTime:int;
 public var dead:boolean;
 public var playerNumber:int;
 private var gameEnded:boolean;
+var playerColor:Color;
 var color:Color;
+//public var audioDie : AudioSource;
+//public var audioStar : AudioSource;
+//public var audioShoot : AudioSource;
+//public var audioPowerUp : AudioSource;
 
 function Start(){
 	
 	gameEnded = false;
 	deadText.material.color = color;
+	scoreBar.material.color = playerColor;
 	deadText.text = "";
 
 }
@@ -125,6 +131,9 @@ function die(){
 		visible();
 		respawn();
 	}
+	
+	//audioDie.Play();
+	
 }
 
 function respawn(){
