@@ -15,7 +15,7 @@ function OnTriggerEnter (other:Collider) {
 		
 		var player:Player = other.gameObject.GetComponent("Player");
 		
-		player.score += value;
+		player.addScore(value);
 		
 		var x = Random.Range(-8, 8);
 		var y = Random.Range(-8, 8);

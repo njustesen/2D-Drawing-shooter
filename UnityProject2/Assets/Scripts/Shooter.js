@@ -5,6 +5,7 @@ var control:String;
 var magicNumber:int;
 public var playerNumber:int;
 private var erasingEnabled:boolean = false;
+public var audioShoot : AudioSource;
 
 function Start () {
 	
@@ -67,6 +68,8 @@ function Shoot () {
 	bullet.rotation = Quaternion.LookRotation(direction);;
 	
 	bullet.gameObject.rigidbody.AddForce(direction * shootForce);
+	
+	audioShoot.Play();
 	
 }
 

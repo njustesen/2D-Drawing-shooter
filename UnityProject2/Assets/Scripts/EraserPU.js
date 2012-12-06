@@ -21,7 +21,7 @@ function OnTriggerEnter (other:Collider) {
 	if (other.gameObject.CompareTag("Playa")){
 		
 		var player:Player = other.gameObject.GetComponent("Player");
-		player.eraserPU();
+		player.eraserPU(5);
 		
 		Destroy(gameObject);
 		

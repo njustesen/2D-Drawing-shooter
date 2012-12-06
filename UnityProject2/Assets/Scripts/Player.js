@@ -23,10 +23,8 @@ public var playerNumber:int;
 private var gameEnded:boolean;
 var playerColor:Color;
 var color:Color;
-//public var audioDie : AudioSource;
-//public var audioStar : AudioSource;
-//public var audioShoot : AudioSource;
-//public var audioPowerUp : AudioSource;
+public var audioDie : AudioSource;
+public var audioStar : AudioSource;
 
 function Start(){
 	
@@ -98,11 +96,15 @@ function teleportPU(){
 
 }
 
-function eraserPU(){
+function eraserPU(time){
 
 	var shooter:Shooter = gameObject.GetComponent("Shooter");
 	
 	shooter.enableErasing();
+	
+	yield WaitForSeconds(time);
+	
+	shooter.disableErasing();
 
 }
 
@@ -124,6 +126,7 @@ function die(){
 	//score--;
 	dead = true;
 	deadText.text = "DEAD";
+	audioDie.Play();
 	//inkBar.renderer.enable = false;
 	transform.position = Vector3(-1000,10,0);
 	yield WaitForSeconds(respawnTime);
@@ -132,8 +135,15 @@ function die(){
 		respawn();
 	}
 	
-	//audioDie.Play();
 	
+	
+}
+
+function addScore(val){
+
+	audioStar.Play();
+	score += val;
+
 }
 
 function respawn(){

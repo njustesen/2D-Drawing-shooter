@@ -7,6 +7,8 @@ var canControl : boolean = true;
 
 var useFixedUpdate : boolean = true;
 
+public var audioJump : AudioSource;
+
 // For the next variables, @System.NonSerialized tells Unity to not serialize the variable or show it in the inspector view.
 // Very handy for organization!
 
@@ -397,9 +399,10 @@ private function ApplyGravityAndJumping (velocity : Vector3) {
 	if (inputJump && jumping.lastButtonDownTime < 0 && canControl)
 		jumping.lastButtonDownTime = Time.time;
 	
-	if (grounded)
+	if (grounded){
 		velocity.y = Mathf.Min(0, velocity.y) - movement.gravity * Time.deltaTime;
-	else {
+		
+	} else {
 		velocity.y = movement.velocity.y - movement.gravity * Time.deltaTime;
 		
 		// When jumping up we don't apply gravity for some time when the user is holding the jump button.
@@ -410,6 +413,7 @@ private function ApplyGravityAndJumping (velocity : Vector3) {
 			if (Time.time < jumping.lastStartTime + jumping.extraHeight / CalculateJumpVerticalSpeed(jumping.baseHeight)) {
 				// Negate the gravity we just applied, except we push in jumpDir rather than jump upwards.
 				velocity += jumping.jumpDir * movement.gravity * Time.deltaTime;
+				
 			}
 		}
 		
@@ -448,6 +452,8 @@ private function ApplyGravityAndJumping (velocity : Vector3) {
 				movement.frameVelocity = movingPlatform.platformVelocity;
 				velocity += movingPlatform.platformVelocity;
 			}
+			
+			audioJump.Play();
 			
 			SendMessage("OnJump", SendMessageOptions.DontRequireReceiver);
 		}

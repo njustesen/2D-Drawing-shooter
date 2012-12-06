@@ -13,6 +13,7 @@ private var animationTimer : float;
 private var lastDirection : float;
 private var animNum : int;
 
+
 // Use this for initialization
 function Awake () {
 	motor = GetComponent(CharacterMotor);

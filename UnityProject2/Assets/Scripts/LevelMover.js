@@ -39,8 +39,6 @@ function Update(){
 		
 	}
 	
-	Debug.Log(""+Time.time);
-	
 	// Change direction?
 	if (movingDirection == Vector3(1,0,0) && gameObject.transform.position.x >= maxWidth){
 		movingDirection = Vector3(0,-1,0);
